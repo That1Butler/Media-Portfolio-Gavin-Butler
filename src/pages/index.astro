@@ -13,106 +13,327 @@ import { YouTube } from "astro-embed";
 		<title>Media Portfolio | That1Butler</title>
 	</head>
 	<body class="bg-[url('./micro_carbon.webp')]">
-		<main class="container mx-auto">
-			<h1
-				class="flex text-left font-bold text-5xl text-white drop-shadow-black drop-shadow-2xl py-2 px-2 justify-center"
+		<main class="container mx-auto px-4 py-10">
+			<div
+				class="relative flex flex-col items-center justify-center border-b pb-6 min-h-[160px]"
 			>
-				That1Butler
-			</h1>
-			<h1
-				class="flex flex-wrap text-left font-bold text-xl text-red-600 drop-shadow-black drop-shadow-2xl px-3 justify-center"
-			>
-				Video Editor | Content Creator
-			</h1>
-			<div class="flex flex-wrap gap-5 justify-center py-4 border-b">
-				<a
-					href="https://instagram.com/that1butleryt"
-					class="inline-block"
-					target="_blank"
-				>
-					<img
-						class="w-7 h-7 object-cover rounded-lg hover:scale-125 transition-all duration-400"
-						src="./IG.svg"
-					/>
-				</a>
-				<a
-					target="_blank"
-					href="https://youtube.com/@that1butler"
-					class="inline-block"
-				>
-					<img
-						class="w-8 h-8 object-contain rounded-lg hover:scale-125 transition-all duration-400"
-						src="./YT.svg"
-					/>
-				</a>
-
-				<a target="_blank" href="mailto:gavin@butlerhq.com">
-					<img
-						class="w-8 h-8 object-contain rounded-lg hover:scale-125 transition-all duration-400"
-						src="./gm.webp"
-					/>
-				</a>
-			</div>
-			<div class="flex flex-1">
-				<YouTube
-					id={"https://youtube.com/shorts/HF-i6XxfTWk"}
-					posterQuality="max"
-					class="shadow-xl border-3 border-[#000000] w-80 aspect-9/16 rounded-xl m-4"
+				<img
+					src="./MOG.jpg"
+					class="static md:absolute left-15 top-15 md:-translate-y-1/2 w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden mb-4 md:left-8 drop-shadow-s drop-shadow-black transition-transform duration-300"
+					alt="Profile Picture"
 				/>
-				<YouTube
-					id={"https://youtube.com/shorts/64LtaCqv4Po"}
-					posterQuality="max"
-					class="shadow-xl border-3 border-[#000000] w-80 aspect-9/16 rounded-xl m-4"
-				/>
-				<YouTube
-					id={"https://youtube.com/shorts/UlS6Za1OyeA"}
-					posterQuality="max"
-					class="shadow-xl border-3 border-[#000000] w-80 aspect-9/16 rounded-xl m-4"
-				/>
-			</div>
-			<!-- Forcing the maximum resolution thumbnail -->
-			<div class="flex flex-col justify-center-safe">
 				<h1
-					class="border-b font-bold text-xl text-white drop-shadow-[#024950] drop-shadow-md p-5 m-4"
+					class="text-5xl font-bold text-white drop-shadow-2xl text-center mb-0"
 				>
-					BORG Vodka Water | Remote Content Creator
+					Gavin Butler
 				</h1>
-				<div
-					class="border-b text-lg text-white drop-shadow-[#024950] drop-shadow-md p-5 m-4 list-disc pl-5 marker:text-lg"
+
+				<h2
+					class="text-xl font-bold text-red-600 drop-shadow-2xl text-center mb-4 py-1 border-b"
 				>
-					<ul class="list-disc pl-5 marker:text-lg">
-						<li>
-							Led <span class="font-bold"
-								>end-to-end social media content production{" "}
-							</span>
-							including storyboarding, producing 30+ pieces of individual
-							content
-						</li>
-						<li class="mt-7">
-							Increased <span class="font-bold"
-								>brand reach{" "}</span
-							> and supported <span class="font-bold"
-								>nationwide sales{" "}</span
-							>
-							through trend-driven Instagram and TikTok videos
-						</li>
-						<li class="mt-7">
-							Developed <span class="font-bold"
-								>campaign and event concepts{" "}</span
-							> aligned with social media trends, and worked to appeal
-							to new audiences
-						</li>
-						<li class="mt-7">
-							Analyzed <span class="font-bold"
-								>content performance and social media trends{
-									" "
-								}</span
-							>
-							to optimize engagement and visibility
-						</li>
-					</ul>
+					Video Editor | Content Creator
+				</h2>
+
+				<!-- Centered Social Icons -->
+				<div class="flex items-center gap-7 justify-center py/1">
+					<a
+						href="https://instagram.com/that1butleryt"
+						target="_blank"
+						class="inline-block"
+					>
+						<img
+							class="w-13 h-13 object-cover rounded-lg hover:scale-125 transition-all duration-400"
+							src="./IG.svg"
+							alt="Instagram"
+						/>
+					</a>
+
+					<a
+						href="https://youtube.com/@that1butler"
+						target="_blank"
+						class="inline-block"
+					>
+						<img
+							class="w-13 h-13 object-contain rounded-lg hover:scale-125 transition-all duration-400"
+							src="./YT.svg"
+							alt="YouTube"
+						/>
+					</a>
+
+					<a href="mailto:gavin@butlerhq.com" target="_blank">
+						<img
+							class="w-13 h-13 object-contain rounded-lg hover:scale-125 transition-all duration-400"
+							src="./gm.webp"
+							alt="Email"
+						/>
+					</a>
 				</div>
 			</div>
 		</main>
+		<div class="flex justify-center flex-1">
+			<YouTube
+				id={"https://youtube.com/shorts/HF-i6XxfTWk"}
+				posterQuality="max"
+				class="shadow-xl border-3 border-[#000000] w-80 aspect-9/16 rounded-xl m-4 hover:scale-105 transition-all duration-400"
+			/>
+			<YouTube
+				id={"https://youtube.com/shorts/64LtaCqv4Po"}
+				posterQuality="max"
+				class="shadow-xl border-3 border-[#000000] w-80 aspect-9/16 rounded-xl m-4 hover:scale-105 transition-all duration-400"
+			/>
+			<YouTube
+				id={"https://youtube.com/shorts/UlS6Za1OyeA"}
+				posterQuality="max"
+				class="shadow-xl border-3 border-[#000000] w-80 aspect-9/16 rounded-xl m-4 hover:scale-105 transition-all duration-400"
+			/>
+			<YouTube
+				id={"https://youtube.com/shorts/kNxvuSypoWE"}
+				posterQuality="max"
+				class="shadow-xl border-3 border-[#000000] w-80 aspect-9/16 rounded-xl m-4 hover:scale-105 transition-all duration-400"
+			/>
+		</div>
+		<div class="flex -col justify-center-safe">
+			<h1
+				class="flex border-r justiy-center font-bold text-xl text-white drop-shadow-[#024950] drop-shadow-md p-5 m-4"
+			>
+				BORG Vodka Water | Content Creator
+			</h1>
+			<div
+				class="text-lg text-white drop-shadow-[#024950] drop-shadow-md p-5 m-4 list-disc pl-5 marker:text-lg"
+			>
+				<ul class="list-disc pl-5 marker:text-lg">
+					<li>
+						Led <span class="font-bold"
+							>end-to-end social media content production{" "}
+						</span>
+						including storyboarding, producing 30+ pieces of individual
+						content
+					</li>
+					<li class="mt-7">
+						Increased <span class="font-bold">brand reach{" "}</span
+						> and supported <span class="font-bold"
+							>nationwide sales{" "}</span
+						>
+						through trend-driven Instagram and TikTok videos
+					</li>
+					<li class="mt-7">
+						Developed <span class="font-bold"
+							>campaign and event concepts{" "}</span
+						> aligned with social media trends, and worked to appeal to
+						new audiences
+					</li>
+					<li class="mt-7">
+						Analyzed <span class="font-bold"
+							>content performance and social media trends{
+								" "
+							}</span
+						>
+						to optimize engagement and visibility
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="flex justify-center flex-1">
+			<YouTube
+				id={"https://youtu.be/eLIxVySvIwQ"}
+				posterQuality="max"
+				class="shadow-xl border-3 border-[#000000] w-80 aspect-video rounded-xl m-4 hover:scale-105 transition-all duration-400"
+			/>
+			<YouTube
+				id={"https://youtube.com/shorts/cX70wzekeuE?feature=share"}
+				posterQuality="max"
+				class="shadow-xl border-3 border-[#000000] w-80 aspect-9/16 rounded-xl m-4 hover:scale-105 transition-all duration-400"
+			/>
+			<YouTube
+				id={"https://youtube.com/shorts/YNoBL4E6kNI?feature=share"}
+				posterQuality="max"
+				class="shadow-xl border-3 border-[#000000] w-80 aspect-9/16 rounded-xl m-4 hover:scale-105 transition-all duration-400"
+			/>
+			<YouTube
+				id={"https://youtube.com/shorts/10iEKixaEXs?feature=share"}
+				posterQuality="max"
+				class="shadow-xl border-3 border-[#000000] w-80 aspect-9/16 rounded-xl m-4 hover:scale-105 transition-all duration-400"
+			/>
+		</div>
+		<div class="flex -col justify-center-safe">
+			<h1
+				class="flex border-r justiy-center font-bold text-xl text-white drop-shadow-[#024950] drop-shadow-md p-5 m-4"
+			>
+				Freestyle Ski Coach/Videographer | Mammoth Mountain
+			</h1>
+			<div
+				class="text-lg text-white drop-shadow-[#024950] drop-shadow-md p-5 m-4 list-disc pl-5 marker:text-lg"
+			>
+				<ul class="list-disc pl-5 marker:text-lg">
+					<li>
+						Created <span class="font-bold"
+							>personal and commercial ski edits for clients.{" "}
+						</span>
+						This included a variety of camera types, and styles of montages.
+					</li>
+					<li class="mt-7">
+						Coached <span class="font-bold"
+							>100s of clients{" "}</span
+						> and produced an <span class="font-bold"
+							>exemplary product{" "}</span
+						>
+						maintaining a 97% NPS score (customer reviews.)
+					</li>
+					<li class="mt-7">
+						Filmed for the purpose of <span class="font-bold"
+							>advertising private coaching,{" "}</span
+						> generating profit, recurring clients, and a customer base
+						left satisfied with their experiences.
+					</li>
+					<li class="mt-7">
+						Built <span class="font-bold"
+							>strong interpersonal relationships{" "}</span
+						>
+						alongside the content I am creating, filled with the love
+						and passion I have for the craft.
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="flex justify-center flex-1 flex-wrap items-center">
+			<!-- Instagram Reel Wrapper matching YouTube Component Sizing -->
+			<div
+				class="w-80 aspect-9/16 rounded-xl m-4 shadow-xl border-3 border-[#000000] hover:scale-105 transition-all duration-400 overflow-hidden flex items-center justify-center bg-black"
+			>
+				<blockquote
+					class="instagram-media"
+					data-instgrm-captioned
+					data-instgrm-permalink="https://www.instagram.com/reel/DcG2AsLiVAF/?utm_source=ig_embed&utm_campaign=loading"
+					data-instgrm-version="14"
+					style="background:black; border:0; margin:0; padding:0; width:100%; min-width:100%; height:100%; object-fit:cover;"
+				>
+				</blockquote>
+			</div>
+
+			<!-- YouTube Shorts -->
+			<YouTube
+				id={"https://youtube.com/shorts/GNC_43XQuPQ"}
+				posterQuality="max"
+				class="shadow-xl border-3 border-[#000000] w-80 aspect-9/16 rounded-xl m-4 hover:scale-105 transition-all duration-400"
+			/>
+			<YouTube
+				id={"https://youtube.com/shorts/UmOvhBu0ams?feature=share"}
+				posterQuality="max"
+				class="shadow-xl border-3 border-[#000000] w-80 aspect-9/16 rounded-xl m-4 hover:scale-105 transition-all duration-400"
+			/>
+			<YouTube
+				id={"https://youtube.com/shorts/AhjISt0zVic"}
+				posterQuality="max"
+				class="shadow-xl border-3 border-[#000000] w-80 aspect-9/16 rounded-xl m-4 hover:scale-105 transition-all duration-400"
+			/>
+		</div>
+
+		<script>
+			function loadInstagram() {
+				if (window.instgrm) {
+					window.instgrm.Embeds.process();
+				} else {
+					const script = document.createElement("script");
+					script.async = true;
+					script.src = "//www.instagram.com/embed.js";
+					document.body.appendChild(script);
+				}
+			}
+
+			loadInstagram();
+			document.addEventListener("astro:page-load", loadInstagram);
+		</script>
+		<div class="flex -col justify-center-safe">
+			<div class="flex flex-col justify-start border-r p-5 m-4">
+				<h1
+					class="font-bold text-xl text-white drop-shadow-[#024950] drop-shadow-md"
+				>
+					Personal Youtube Channel | Gaming/Ski/Music Content
+				</h1>
+
+				<div class="flex items-center gap-2 mt-3">
+					<span
+						class="text-sm font-semibold uppercase tracking-wider text-gray-300 drop-shadow-[#024950] drop-shadow-md"
+					>
+						Subscribers:
+					</span>
+					<span
+						id="yt-sub-count"
+						class="text-lg font-bold text-red-500 drop-shadow-[#024950] drop-shadow-md"
+					>
+						5200
+					</span>
+				</div>
+			</div>
+
+			<div
+				class="text-lg text-white drop-shadow-[#024950] drop-shadow-md p-5 m-4 list-disc pl-5 marker:text-lg"
+			>
+				<ul class="list-disc pl-5 marker:text-lg">
+					<li>
+						Generated <span class="font-bold">3M+ views{" "}</span> across
+						multiple platforms including Youtube, Instagram, and Tiktok.
+					</li>
+					<li class="mt-7">
+						Successfully generated <span class="font-bold"
+							>$1,000s of income</span
+						> casually off of <span class="font-bold"
+							>personal branding{" "}</span
+						> and my content creations ad revinue.
+					</li>
+					<li class="mt-7">
+						Managed all aspects of production workflows <span
+							class="font-bold"
+							>including scripting, video editing, motion
+							graphics, audio mastering, color grading, and
+							thumbnail design.</span
+						>
+					</li>
+					<li class="mt-7">
+						Leveraged platform analytics (CTR, retention graphs,
+						account reach, engagement rates)<span class="font-bold"
+							>(CTR, retention graphs, account reach, engagement
+							rates){" "}</span
+						> to continuously refine video hooks, pacing, and visual storytelling.
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<script>
+			const API_KEY = "AIzaSyC3ZYtM0Kj1Kt2U5B7ZmbYBtB2YeyRqc_s"; // Paste your API key here
+			const CHANNEL_HANDLE = "that1butler";
+
+			async function fetchSubCount() {
+				const subCountElement = document.getElementById("yt-sub-count");
+				if (!subCountElement) return;
+
+				const fallbackValue = subCountElement.textContent.trim();
+
+				try {
+					const res = await fetch(
+						`https://www.googleapis.com/youtube/v3/channels?part=statistics&forHandle=${CHANNEL_HANDLE}&key=${API_KEY}`,
+					);
+					const data = await res.json();
+
+					if (data.items && data.items.length > 0) {
+						const count = data.items[0].statistics.subscriberCount;
+						subCountElement.textContent =
+							Number(count).toLocaleString();
+					} else {
+						subCountElement.textContent = fallbackValue;
+					}
+				} catch (error) {
+					console.error(
+						"Error fetching YouTube subscriber count:",
+						error,
+					);
+					subCountElement.textContent = fallbackValue;
+				}
+			}
+
+			fetchSubCount();
+			document.addEventListener("astro:page-load", fetchSubCount);
+		</script>
 	</body>
 </html>
