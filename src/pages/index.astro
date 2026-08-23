@@ -12,29 +12,6 @@ import { YouTube } from "astro-embed";
 	<title>Media Portfolio | That1Butler</title>
 
 	<body>
-		<body>
-			<!-- Fixed Repeating Background -->
-			<div
-				style="
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background-image: url('bg.webp');
-      background-repeat: repeat;
-      background-size: auto;
-      z-index: -9999;
-      pointer-events: none;
-    "
-			>
-			</div>
-
-			<!-- Your Website Content -->
-			<div class="relative z-10">
-				<!-- Existing code here -->
-			</div>
-		</body>
 		<script>
 			document.addEventListener("DOMContentLoaded", () => {
 				// 1. Scroll Reveal Observer
@@ -162,8 +139,31 @@ import { YouTube } from "astro-embed";
 		</script>
 
 		<main class="container mx-auto px-4 py-10">
+			<body>
+				<!-- Fixed Repeating Background -->
+				<div
+					style="
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-image: url('/bg.webp');
+      background-repeat: repeat;
+      background-size: auto;
+      z-index: -9999;
+      pointer-events: none;
+    "
+				>
+				</div>
+
+				<!-- Your Website Content -->
+				<div class="relative z-10">
+					<!-- Existing code here -->
+				</div>
+			</body>
 			<div
-				class="relative flex flex-col items-center justify-center border-b pb-6 min-h-[160px]"
+				class="relative flex flex-col items-center justify-center border-b border-white pb-6 min-h-[160px]"
 			>
 				<!-- Top Right Tools Section with Left-Side Experience Box -->
 				<div
@@ -182,7 +182,7 @@ import { YouTube } from "astro-embed";
 					</div>
 
 					<!-- Divider + Tools Grid Wrapper -->
-					<div class="flex flex-col border-l ps-5 border-black">
+					<div class="flex flex-col border-l ps-5 border-white">
 						<span
 							class="text-white text-xs font-semibold tracking-wider uppercase mb-2 drop-shadow leading-none text-center"
 						>
