@@ -13,24 +13,72 @@ import { YouTube } from "astro-embed";
 		<title>Media Portfolio | That1Butler</title>
 	</head>
 	<body class="bg-[#003135]">
-		<h1 class = "font-bold text-5xl text-[#AFDDE5] drop-shadow-[#024950] drop-shadow-md p-5">That1Butler</h1>
-			<!-- Forcing the maximum resolution thumbnail -->
-			 <div class = "flex bg-[#0FA4AF]/50">
-			<YouTube
-				id={"https://youtube.com/shorts/HF-i6XxfTWk"}
-				posterQuality="max"
-				class = "shadow-xl border-3 border-[#024950] w-50 aspect-9/16 rounded-xl m-4"/>
-			<YouTube
-				id={"https://youtube.com/shorts/64LtaCqv4Po"}
-				posterQuality="max"
-				class = "shadow-xl border-3 border-[#024950] w-50 aspect-9/16 rounded-xl m-4"/>
-			<YouTube
-				id={"https://youtube.com/shorts/UlS6Za1OyeA"}
-				posterQuality="max"
-				class = "shadow-xl border-3 border-[#024950] w-50 aspect-9/16 rounded-xl m-4"/>
-			<div class="w-64 h-32 bg-blue-500">
-			
+		<h1
+			class="font-bold text-5xl text-[#AFDDE5] drop-shadow-[#024950] drop-shadow-md p-5"
+		>
+			That1Butler
+		</h1>
+		<!-- Forcing the maximum resolution thumbnail -->
+		<div class="flex bg-[#0FA4AF]/50">
+			<div class="flex flex-1">
+				<YouTube
+					id={"https://youtube.com/shorts/HF-i6XxfTWk"}
+					posterQuality="max"
+					class="shadow-xl border-3 border-[#024950] w-80 aspect-9/16 rounded-xl m-4"
+				/>
+				<YouTube
+					id={"https://youtube.com/shorts/64LtaCqv4Po"}
+					posterQuality="max"
+					class="shadow-xl border-3 border-[#024950] w-80 aspect-9/16 rounded-xl m-4"
+				/>
+				<YouTube
+					id={"https://youtube.com/shorts/UlS6Za1OyeA"}
+					posterQuality="max"
+					class="shadow-xl border-3 border-[#024950] w-80 aspect-9/16 rounded-xl m-4"
+				/>
 			</div>
+			<div class="flex flex-col justify-center-safe">
+				<h1
+					class="bg-red-950 font-bold text-xl text-white drop-shadow-[#024950] drop-shadow-md p-5 m-4 rounded-2xl"
+				>
+					BORG Vodka Water | Remote Content Creator
+				</h1>
+				<h1
+					class="bg-red-950 text-lg text-white drop-shadow-[#024950] drop-shadow-md p-5 m-4 rounded-2xl list-disc pl-5 marker:text-lg"
+				>
+					<ul class="list-disc pl-5 marker:text-lg">
+						<li>
+							Led <span class="font-bold"
+								>end-to-end social media content production{" "}
+							</span>
+							including storyboarding, producing 30+ pieces of individual
+							content
+						</li>
+						<li class="mt-7">
+							Increased <span class="font-bold"
+								>brand reach{" "}</span
+							> and supported <span class="font-bold"
+								>nationwide sales{" "}</span
+							>
+							through trend-driven Instagram and TikTok videos
+						</li>
+						<li class="mt-7">
+							Developed <span class="font-bold"
+								>campaign and event concepts{" "}</span
+							> aligned with social media trends, and worked to appeal
+							to new audiences
+						</li>
+						<li class="mt-7">
+							Analyzed <span class="font-bold"
+								>content performance and social media trends{
+									" "
+								}</span
+							>
+							to optimize engagement and visibility
+						</li>
+					</ul>
+				</h1>
 			</div>
+		</div>
 	</body>
 </html>
