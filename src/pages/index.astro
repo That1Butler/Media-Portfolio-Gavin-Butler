@@ -45,7 +45,7 @@ import { YouTube } from "astro-embed";
 					.querySelectorAll(".scroll-reveal-left")
 					.forEach((el) => scrollObserver.observe(el));
 
-				// 2. Generic Hover Handler (Supports HTML formatting via innerHTML)
+				// 2. Generic Hover Handler
 				const bindHover = (selector, targetBoxId) => {
 					const elements = document.querySelectorAll(selector);
 					const targetBox = document.getElementById(targetBoxId);
@@ -54,7 +54,6 @@ import { YouTube } from "astro-embed";
 
 					elements.forEach((el) => {
 						el.addEventListener("mouseenter", (e) => {
-							// Pulls attribute directly from the hovered element or closest matching parent
 							const target = e.currentTarget;
 							const text = target.getAttribute("data-experience");
 
@@ -62,6 +61,23 @@ import { YouTube } from "astro-embed";
 								targetBox.innerHTML = text;
 								targetBox.classList.remove("opacity-0");
 								targetBox.classList.add("opacity-100");
+							}
+
+							// Permanently hide the hover me badge on headshot interaction
+							if (selector === ".profile-icon") {
+								const badge = document.getElementById(
+									"profile-hover-badge",
+								);
+								if (badge) {
+									badge.classList.add(
+										"opacity-0",
+										"pointer-events-none",
+									);
+									// Completely remove after fade-out transition completes
+									setTimeout(() => {
+										badge.style.display = "none";
+									}, 300);
+								}
 							}
 						});
 
@@ -74,10 +90,55 @@ import { YouTube } from "astro-embed";
 
 				// Initialize all hover sections
 				bindHover(".tool-icon", "tool-experience-box");
-				bindHover(".social-icon", "social-experience-box");
+				bindHover(".social-icon", "profile-experience-box"); // Uses the left bio text box!
 				bindHover(".profile-icon", "profile-experience-box");
 			});
+			if (selector === ".profile-icon") {
+				const badge = document.getElementById("profile-hover-badge");
+				if (badge) badge.classList.add("opacity-0");
+			}
+
+			if (selector === ".tool-icon") {
+				const badge = document.getElementById("tools-hover-badge");
+				if (badge) badge.classList.add("opacity-0");
+			}
 		</script>
+		<script>
+			const API_KEY = "AIzaSyC3ZYtM0Kj1Kt2U5B7ZmbYBtB2YeyRqc_s"; // Paste your API key here
+			const CHANNEL_HANDLE = "that1butler";
+
+			async function fetchSubCount() {
+				const subCountElement = document.getElementById("yt-sub-count");
+				if (!subCountElement) return;
+
+				const fallbackValue = subCountElement.textContent.trim();
+
+				try {
+					const res = await fetch(
+						`https://www.googleapis.com/youtube/v3/channels?part=statistics&forHandle=${CHANNEL_HANDLE}&key=${API_KEY}`,
+					);
+					const data = await res.json();
+
+					if (data.items && data.items.length > 0) {
+						const count = data.items[0].statistics.subscriberCount;
+						subCountElement.textContent =
+							Number(count).toLocaleString();
+					} else {
+						subCountElement.textContent = fallbackValue;
+					}
+				} catch (error) {
+					console.error(
+						"Error fetching YouTube subscriber count:",
+						error,
+					);
+					subCountElement.textContent = fallbackValue;
+				}
+			}
+
+			fetchSubCount();
+			document.addEventListener("astro:page-load", fetchSubCount);
+		</script>
+
 		<main class="container mx-auto px-4 py-10">
 			<div
 				class="relative flex flex-col items-center justify-center border-b pb-6 min-h-[160px]"
@@ -150,19 +211,43 @@ import { YouTube } from "astro-embed";
 				<div
 					class="static md:absolute top-0 left-4 md:left-8 flex flex-row items-center mb-4 md:mb-0 z-10"
 				>
-					<img
-						src="./MOG.jpg"
-						class="profile-icon w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden drop-shadow-s drop-shadow-black transition-all duration-400 hover:scale-110 cursor-pointer"
-						alt="Profile Picture"
-						data-experience="My name is <b>Gavin Butler</b>. I have a <b>BA in Media Production</b> from the <b>University of Colorado Boulder</b>, and have been professionally editing video for over <b>5 years</b>. I love to ski, create, and be the <b>BEST</b> at whatever I do."
-					/>
-					<!-- Hover Description Box (Aligned to the right of MOG.jpg) -->
+					<div class="relative flex-shrink-0">
+						<!-- Profile Picture -->
+						<img
+							src="./MOG.jpg"
+							class="profile-icon w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden drop-shadow-s drop-shadow-black transition-all duration-400 hover:scale-110 cursor-pointer"
+							alt="Profile Picture"
+							data-experience="My name is <b>Gavin Butler</b>. I have a <b>BA in Media Production</b> from the <b>University of Colorado Boulder</b>, and have been professionally editing video for over <b>5 years</b>. I love to ski, create, and be the <b>BEST</b> at whatever I do."
+						/>
+
+						<!-- Hover Indicator Badge -->
+						<div
+							id="profile-hover-badge"
+							class="hidden md:flex items-center gap-1.5 absolute -right-26 top-1/2 -translate-y-1/2 bg-white/10 border border-white/20 backdrop-blur-md px-2.5 py-1 rounded-full text-xs text-gray-200 pointer-events-none shadow-lg whitespace-nowrap z-20 transition-opacity duration-500"
+						>
+							<svg
+								class="w-3 h-3 text-white"
+								fill="none"
+								stroke="currentColor"
+								viewBox="0 0 24 24"
+							>
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2.5"
+									d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+							</svg>
+							<span>About me!</span>
+						</div>
+					</div>
+
+					<!-- Hover Description Box -->
 					<div
-						class="hidden md:flex w-96 justify-start pl-8 text-left pointer-events-none"
+						class="hidden md:flex w-96 justify-start pl-28 text-left pointer-events-none"
 					>
 						<p
 							id="profile-experience-box"
-							class="text-gray-200 text-s font-small leading-snug opacity-0 transition-opacity duration-300"
+							class="text-gray-200 text-m font-normal leading-snug opacity-0 transition-opacity duration-300"
 						>
 							<!-- Text populates on hover -->
 						</p>
@@ -203,7 +288,7 @@ import { YouTube } from "astro-embed";
 						href="https://instagram.com/that1butleryt"
 						target="_blank"
 						class="social-icon inline-block"
-						data-experience="@That1ButlerYT is my branded account associated with content and Youtube!"
+						data-experience="<b>@That1ButlerYT</b> is my branded account associated with content and Youtube!"
 					>
 						<img
 							class="w-13 h-13 object-cover rounded-lg hover:scale-125 transition-all duration-400"
@@ -216,7 +301,7 @@ import { YouTube } from "astro-embed";
 						href="https://youtube.com/@that1butler"
 						target="_blank"
 						class="social-icon inline-block"
-						data-experience="@That1Butler on YT, 2M+ views, more information down below!"
+						data-experience="<b>@That1Butler</b> on Youtube, generating <b>2M+ views</b>, more information down below!"
 					>
 						<img
 							class="w-13 h-13 object-contain rounded-lg hover:scale-125 transition-all duration-400"
@@ -228,7 +313,7 @@ import { YouTube } from "astro-embed";
 					<a
 						href="mailto:gavin@butlerhq.com"
 						class="social-icon inline-block"
-						data-experience="Reach out to gavin@butlerhq.com for inquiries or commissions!"
+						data-experience="Reach out to <b>Gavin@ButlerHQ.com</b> for inquiries or commissions!"
 					>
 						<img
 							class="w-13 h-13 object-contain rounded-lg hover:scale-125 transition-all duration-400"
@@ -461,7 +546,7 @@ import { YouTube } from "astro-embed";
 							<div class="font-bold border-b border-white p-1">
 								Personal Youtube Channel
 							</div><div class="text-sm py-2">
-								Gaming, Ski, Music Content
+								Gaming, Skiing, Music Content
 							</div>
 						</h1>
 						<div
@@ -543,43 +628,55 @@ import { YouTube } from "astro-embed";
 				</div>
 			</div>
 
-			<script>
-				const API_KEY = "AIzaSyC3ZYtM0Kj1Kt2U5B7ZmbYBtB2YeyRqc_s"; // Paste your API key here
-				const CHANNEL_HANDLE = "that1butler";
+			<div
+				class="scroll-reveal-left flex flex-col items-center justify-center mt-20 mb-16 text-center transition-all duration-700"
+			>
+				<!-- Divider Line -->
+				<div class="w-24 h-1 bg-white rounded-full mb-8"></div>
 
-				async function fetchSubCount() {
-					const subCountElement =
-						document.getElementById("yt-sub-count");
-					if (!subCountElement) return;
+				<span
+					class="text-white text-xs font-semibold tracking-widest uppercase mb-2 drop-shadow"
+				>
+					Contact Me!
+				</span>
 
-					const fallbackValue = subCountElement.textContent.trim();
+				<h2
+					class="text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight"
+				>
+					Let's Work Together
+				</h2>
 
-					try {
-						const res = await fetch(
-							`https://www.googleapis.com/youtube/v3/channels?part=statistics&forHandle=${CHANNEL_HANDLE}&key=${API_KEY}`,
-						);
-						const data = await res.json();
+				<p
+					class="text-gray-400 text-sm md:text-base max-w-md mb-8 leading-relaxed"
+				>
+					Have a project in mind, need long-form or short-form edits,
+					or just want to collaborate? Reach out below!
+				</p>
 
-						if (data.items && data.items.length > 0) {
-							const count =
-								data.items[0].statistics.subscriberCount;
-							subCountElement.textContent =
-								Number(count).toLocaleString();
-						} else {
-							subCountElement.textContent = fallbackValue;
-						}
-					} catch (error) {
-						console.error(
-							"Error fetching YouTube subscriber count:",
-							error,
-						);
-						subCountElement.textContent = fallbackValue;
-					}
-				}
+				<!-- Email CTA Button -->
+				<a
+					href="mailto:gavin@butlerhq.com"
+					class="inline-flex items-center gap-3 bg-white/10 hover:bg-white/20 text-white font-medium px-8 py-3 rounded-full border border-white/20 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-white drop-shadow-xl cursor-pointer"
+				>
+					<svg
+						class="w-5 h-5 text-white"
+						fill="none"
+						stroke="currentColor"
+						viewBox="0 0 24 24"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 002-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+						></path>
+					</svg>
+					<span>Send Me an Email</span>
+				</a>
 
-				fetchSubCount();
-				document.addEventListener("astro:page-load", fetchSubCount);
-			</script>
+				<!-- Footer Copyright -->
+				<p class="text-xs text-gray-500 mt-16">Created by me.</p>
+			</div>
 		</div>
 	</body>
 </html>
