@@ -85,10 +85,92 @@ import { YouTube } from "astro-embed";
 				.querySelectorAll(".scroll-reveal-left")
 				.forEach((el) => observer.observe(el));
 		</script>
+		<script>
+			const icons = document.querySelectorAll(".tool-icon");
+			const expBox = document.getElementById("experience-box");
+
+			icons.forEach((icon) => {
+				icon.addEventListener("mouseenter", () => {
+					expBox.textContent = icon.getAttribute("data-experience");
+					expBox.classList.remove("opacity-0");
+					expBox.classList.add("opacity-100");
+				});
+
+				icon.addEventListener("mouseleave", () => {
+					expBox.classList.remove("opacity-100");
+					expBox.classList.add("opacity-0");
+				});
+			});
+		</script>
 		<main class="container mx-auto px-4 py-10">
 			<div
-				class="relative flex flex-col items-center justify-center border-b pb-6 min-h: 160px"
+				class="relative flex flex-col items-center justify-center border-b pb-6 min-h-[160px]"
 			>
+				<!-- Top Right Tools Section with Left-Side Experience Box -->
+				<div
+					class="static md:absolute top-0 right-4 md:right-8 flex flex-row items-center mb-4 md:mb-0"
+				>
+					<!-- Hover Description Box (Left of the line) -->
+					<div
+						class="hidden md:flex w-48 justify-end pr-4 text-right"
+					>
+						<p
+							id="experience-box"
+							class="text-gray-300 text-m font-medium leading-relaxed opacity-0 transition-opacity duration-300 pointer-events-none"
+						>
+							<!-- Text populates on hover -->
+						</p>
+					</div>
+
+					<!-- Divider + Tools Grid Wrapper -->
+					<div class="flex flex-col border-l ps-5 border-black">
+						<span
+							class="text-white text-xs font-semibold tracking-wider uppercase mb-2 drop-shadow leading-none text-center"
+						>
+							Tools
+						</span>
+						<div
+							class="grid grid-cols-3 gap-2.5 justify-items-center"
+						>
+							<img
+								class="tool-icon w-12 h-12 object-contain hover:scale-110 transition-transform duration-300 drop-shadow-2xl shadow-black cursor-pointer"
+								src="./PP.webp"
+								alt="Premiere Pro"
+								data-experience="5+ years in long-form video editing"
+							/>
+							<img
+								class="tool-icon w-12 h-12 object-contain hover:scale-110 transition-transform duration-300 drop-shadow-2xl shadow-black cursor-pointer"
+								src="./AE.webp"
+								alt="After Effects"
+								data-experience="2+ years creating motion graphics & VFX."
+							/>
+							<img
+								class="tool-icon w-12 h-12 object-contain hover:scale-110 transition-transform duration-300 drop-shadow-2xl shadow-black cursor-pointer"
+								src="./AD.webp"
+								alt="Audition"
+								data-experience="3+ years in Audio cleanup, EQ, and master leveling."
+							/>
+							<img
+								class="tool-icon w-12 h-12 object-contain hover:scale-110 transition-transform duration-300 drop-shadow-2xl shadow-black cursor-pointer"
+								src="./LRC.svg"
+								alt="Lightroom Classic"
+								data-experience="5+ years in Color grading & thumbnail asset design."
+							/>
+							<img
+								class="tool-icon w-12 h-12 object-contain hover:scale-110 transition-transform duration-300 drop-shadow-2xl shadow-black cursor-pointer"
+								src="./BL.webp"
+								alt="Blender"
+								data-experience="1+ year in 3D modeling & scene rendering."
+							/>
+							<img
+								class="tool-icon w-12 h-12 object-contain hover:scale-110 transition-transform duration-300 drop-shadow-2xl shadow-black cursor-pointer"
+								src="./YTS.webp"
+								alt="YouTube Studio"
+								data-experience="5+ Years in monitoring audience retention analytics & SEO."
+							/>
+						</div>
+					</div>
+				</div>
 				<img
 					src="./MOG.jpg"
 					class="static md:absolute left-15 top-15 md:-translate-y-1/2 w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden mb-4 md:left-8 drop-shadow-s drop-shadow-black transition-transform duration-300"
@@ -173,7 +255,7 @@ import { YouTube } from "astro-embed";
 					class="w-max text-xl text-right border-r md:border-b-0 md:border-r border-white pr-6 pb-3 md:pb-0 h-full flex flex-col justify-start"
 				>
 					<h1
-						class="drop-shadow-[#024950] drop-shadow-md whitespace-nowrap"
+						class="drop-shadow-black drop-shadow-md whitespace-nowrap"
 					>
 						<div
 							class="font-bold border-b border-white p-1 text-right whitespace-nowrap"
@@ -186,7 +268,7 @@ import { YouTube } from "astro-embed";
 					</h1>
 				</div>
 				<div
-					class="text-lg text-white drop-shadow-[#024950] drop-shadow-md p-5 m-4 list-disc pl-5 marker:text-lg"
+					class="text-lg text-white drop-shadow-black drop-shadow-md p-5 m-4 list-disc pl-5 marker:text-lg"
 				>
 					<ul class="list-disc pl-5 marker:text-lg">
 						<li>
@@ -253,7 +335,7 @@ import { YouTube } from "astro-embed";
 					class="w-max text-xl text-right border-r md:border-b-0 md:border-r border-white pr-6 pb-3 md:pb-0 h-full flex flex-col justify-start"
 				>
 					<h1
-						class="drop-shadow-[#024950] drop-shadow-md whitespace-nowrap"
+						class="drop-shadow-black drop-shadow-md whitespace-nowrap"
 					>
 						<div
 							class="font-bold border-b border-white p-1 text-right whitespace-nowrap"
@@ -266,7 +348,7 @@ import { YouTube } from "astro-embed";
 					</h1>
 				</div>
 				<div
-					class="text-lg text-white drop-shadow-[#024950] drop-shadow-md p-5 m-4 list-disc pl-5 marker:text-lg"
+					class="text-lg text-white drop-shadow-black drop-shadow-md p-5 m-4 list-disc pl-5 marker:text-lg"
 				>
 					<ul class="list-disc pl-5 marker:text-lg">
 						<li>
@@ -360,7 +442,7 @@ import { YouTube } from "astro-embed";
 					<div
 						class="w-full md:w-auto text-xl text-left md:text-right border-r md:border-b-0 md:border-r border-white pr-5 pb-3 md:pb-0 h-full flex flex-col justify-start"
 					>
-						<h1 class="drop-shadow-[#024950] drop-shadow-md">
+						<h1 class="drop-shadow-black drop-shadow-md">
 							<div class="font-bold border-b border-white p-1">
 								Personal Youtube Channel
 							</div><div class="text-sm py-2">
@@ -375,13 +457,13 @@ import { YouTube } from "astro-embed";
 								class="flex items-center justify-start md:justify-end gap-2"
 							>
 								<span
-									class="text-lg font-semibold uppercase tracking-wider text-gray-300 drop-shadow-[#024950] drop-shadow-md whitespace-nowrap"
+									class="text-lg font-semibold tracking-wider text-gray-300 drop-shadow-black drop-shadow-md whitespace-nowrap"
 								>
 									Subscribers:
 								</span>
 								<span
 									id="yt-sub-count"
-									class="text-lg font-bold text-red-500 drop-shadow-[#024950] drop-shadow-md"
+									class="text-lg font-bold text-red-600 drop-shadow-black drop-shadow-md"
 								>
 									5,240
 								</span>
@@ -392,13 +474,13 @@ import { YouTube } from "astro-embed";
 								class="flex items-center justify-start md:justify-end gap-2"
 							>
 								<span
-									class="text-lg font-semibold uppercase tracking-wider text-gray-300 drop-shadow-[#024950] drop-shadow-md whitespace-nowrap"
+									class="text-lg font-semibold tracking-wider text-gray-300 drop-shadow-black drop-shadow-md whitespace-nowrap"
 								>
 									Total Views:
 								</span>
 								<span
 									id="yt-view-count"
-									class="text-lg font-bold text-red-500 drop-shadow-[#024950] drop-shadow-md"
+									class="text-lg font-bold text-red-600 drop-shadow-black drop-shadow-md"
 								>
 									2,450,000+
 								</span>
@@ -408,7 +490,7 @@ import { YouTube } from "astro-embed";
 
 					<!-- RIGHT COLUMN: Bullet Points -->
 					<div
-						class="w-full text-lg drop-shadow-[#024950] drop-shadow-md pl-5 md:pl-6"
+						class="w-full text-lg drop-shadow-black drop-shadow-md pl-5 md:pl-6"
 					>
 						<ul class="list-disc pl-5 marker:text-lg">
 							<li>
