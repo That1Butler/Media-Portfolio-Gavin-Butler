@@ -13,93 +13,75 @@ import { YouTube } from "astro-embed";
 		<title>Media Portfolio | That1Butler</title>
 	</head>
 	<body class="bg-[url('./micro_carbon.webp')]">
+		The issue is that closest(".tool-icon") fails when hovering directly on
+		an <img /> tag that has the class .tool-icon itself. closest() looks for an
+		ancestor matching the selector, but if the element doesn't have parents with
+		that class, it returns null and breaks the event listener. Here is the fixed
+		script that safely pulls getAttribute("data-experience") directly from the
+		hovered target: HTML
 		<script>
-			const observer = new IntersectionObserver(
-				(entries) => {
-					entries.forEach((entry) => {
-						if (entry.isIntersecting) {
-							// In view: slide in and fade in
-							entry.target.classList.remove(
-								"opacity-0",
-								"-translate-x-12",
-							);
-							entry.target.classList.add(
+			document.addEventListener("DOMContentLoaded", () => {
+				// 1. Scroll Reveal Observer
+				const scrollObserver = new IntersectionObserver(
+					(entries) => {
+						entries.forEach((entry) => {
+							const isVisible = entry.isIntersecting;
+							entry.target.classList.toggle(
 								"opacity-100",
-								"translate-x-0",
+								isVisible,
 							);
-						} else {
-							// Out of view: reset back to original state (fades out and shifts back left)
-							entry.target.classList.remove(
-								"opacity-100",
+							entry.target.classList.toggle(
 								"translate-x-0",
+								isVisible,
 							);
-							entry.target.classList.add(
+							entry.target.classList.toggle(
 								"opacity-0",
-								"-translate-x-12",
+								!isVisible,
 							);
-						}
+							entry.target.classList.toggle(
+								"-translate-x-12",
+								!isVisible,
+							);
+						});
+					},
+					{ threshold: 0.15 },
+				);
+
+				document
+					.querySelectorAll(".scroll-reveal-left")
+					.forEach((el) => scrollObserver.observe(el));
+
+				// 2. Generic Hover Handler (Supports HTML formatting via innerHTML)
+				const bindHover = (selector, targetBoxId) => {
+					const elements = document.querySelectorAll(selector);
+					const targetBox = document.getElementById(targetBoxId);
+
+					if (!targetBox) return;
+
+					elements.forEach((el) => {
+						el.addEventListener("mouseenter", (e) => {
+							// Pulls attribute directly from the hovered element or closest matching parent
+							const target = e.currentTarget;
+							const text = target.getAttribute("data-experience");
+
+							if (text) {
+								targetBox.innerHTML = text;
+								targetBox.classList.remove("opacity-0");
+								targetBox.classList.add("opacity-100");
+							}
+						});
+
+						el.addEventListener("mouseleave", () => {
+							targetBox.classList.remove("opacity-100");
+							targetBox.classList.add("opacity-0");
+						});
 					});
-				},
-				{
-					threshold: 0.2, // Triggers when 20% of the element is visible
-				},
-			);
+				};
 
-			const target = document.getElementById("reveal-section");
-			if (target) observer.observe(target);
-		</script>
-		<script>
-			const observer = new IntersectionObserver(
-				(entries) => {
-					entries.forEach((entry) => {
-						if (entry.isIntersecting) {
-							// Slide in & fade in on scroll down
-							entry.target.classList.remove(
-								"opacity-0",
-								"-translate-x-12",
-							);
-							entry.target.classList.add(
-								"opacity-100",
-								"translate-x-0",
-							);
-						} else {
-							// Reset (fade out & slide left) when scrolling away
-							entry.target.classList.remove(
-								"opacity-100",
-								"translate-x-0",
-							);
-							entry.target.classList.add(
-								"opacity-0",
-								"-translate-x-12",
-							);
-						}
-					});
-				},
-				{
-					threshold: 0.15,
-				},
-			);
-
-			// Automatically watches all sections using the scroll-reveal-left class
-			document
-				.querySelectorAll(".scroll-reveal-left")
-				.forEach((el) => observer.observe(el));
-		</script>
-		<script>
-			const icons = document.querySelectorAll(".tool-icon");
-			const expBox = document.getElementById("experience-box");
-
-			icons.forEach((icon) => {
-				icon.addEventListener("mouseenter", () => {
-					expBox.textContent = icon.getAttribute("data-experience");
-					expBox.classList.remove("opacity-0");
-					expBox.classList.add("opacity-100");
-				});
-
-				icon.addEventListener("mouseleave", () => {
-					expBox.classList.remove("opacity-100");
-					expBox.classList.add("opacity-0");
-				});
+				// Initialize all hover sections
+				bindHover(".tool-icon", "tool-experience-box");
+				bindHover(".social-icon", "social-experience-box");
+				bindHover(".profile-icon", "profile-experience-box");
 			});
 		</script>
 		<main class="container mx-auto px-4 py-10">
@@ -110,12 +92,12 @@ import { YouTube } from "astro-embed";
 				<div
 					class="static md:absolute top-0 right-4 md:right-8 flex flex-row items-center mb-4 md:mb-0"
 				>
-					<!-- Hover Description Box (Left of the line) -->
+					<!-- Hover Description Box -->
 					<div
-						class="hidden md:flex w-48 justify-end pr-4 text-right"
+						class="hidden md:flex w-80 justify-end pr-4 text-right"
 					>
 						<p
-							id="experience-box"
+							id="tool-experience-box"
 							class="text-gray-300 text-m font-medium leading-relaxed opacity-0 transition-opacity duration-300 pointer-events-none"
 						>
 							<!-- Text populates on hover -->
@@ -133,67 +115,101 @@ import { YouTube } from "astro-embed";
 							class="grid grid-cols-3 gap-2.5 justify-items-center"
 						>
 							<img
-								class="tool-icon w-12 h-12 object-contain hover:scale-110 transition-transform duration-300 drop-shadow-2xl shadow-black cursor-pointer"
+								class="tool-icon relative z-10 w-12 h-12 object-contain hover:scale-110 transition-transform duration-300 drop-shadow-2xl shadow-black cursor-pointer"
 								src="./PP.webp"
 								alt="Premiere Pro"
-								data-experience="5+ years in long-form video editing"
+								data-experience="<b>5+ years</b> in Premiere Pro, creating long and shortform video."
 							/>
 							<img
-								class="tool-icon w-12 h-12 object-contain hover:scale-110 transition-transform duration-300 drop-shadow-2xl shadow-black cursor-pointer"
+								class="tool-icon relative z-10 w-12 h-12 object-contain hover:scale-110 transition-transform duration-300 drop-shadow-2xl shadow-black cursor-pointer"
 								src="./AE.webp"
 								alt="After Effects"
-								data-experience="2+ years creating motion graphics & VFX."
+								data-experience="<b>3+ years</b> in After Effects creating custom motion graphics & VFX."
 							/>
 							<img
-								class="tool-icon w-12 h-12 object-contain hover:scale-110 transition-transform duration-300 drop-shadow-2xl shadow-black cursor-pointer"
+								class="tool-icon relative z-10 w-12 h-12 object-contain hover:scale-110 transition-transform duration-300 drop-shadow-2xl shadow-black cursor-pointer"
 								src="./AD.webp"
 								alt="Audition"
-								data-experience="3+ years in Audio cleanup, EQ, and master leveling."
+								data-experience="<b>3+ Years</b> in Audition excecuting Audio cleanup, EQ, and master leveling."
 							/>
 							<img
-								class="tool-icon w-12 h-12 object-contain hover:scale-110 transition-transform duration-300 drop-shadow-2xl shadow-black cursor-pointer"
+								class="tool-icon relative z-10 w-12 h-12 object-contain hover:scale-110 transition-transform duration-300 drop-shadow-2xl shadow-black cursor-pointer"
 								src="./LRC.svg"
 								alt="Lightroom Classic"
-								data-experience="5+ years in Color grading & thumbnail asset design."
+								data-experience="<b>3+ years</b> in Lightroom Classic color grading & refining thumbnails."
 							/>
 							<img
-								class="tool-icon w-12 h-12 object-contain hover:scale-110 transition-transform duration-300 drop-shadow-2xl shadow-black cursor-pointer"
+								class="tool-icon relative z-10 w-12 h-12 object-contain hover:scale-110 transition-transform duration-300 drop-shadow-2xl shadow-black cursor-pointer"
 								src="./BL.webp"
 								alt="Blender"
-								data-experience="1+ year in 3D modeling & scene rendering."
+								data-experience="<b>1+ year</b> in Blender 3d modeling and rendering for Thubnails and Videos."
 							/>
 							<img
-								class="tool-icon w-12 h-12 object-contain hover:scale-110 transition-transform duration-300 drop-shadow-2xl shadow-black cursor-pointer"
+								class="tool-icon relative z-10 w-12 h-12 object-contain hover:scale-110 transition-transform duration-300 drop-shadow-2xl shadow-black cursor-pointer"
 								src="./YTS.webp"
 								alt="YouTube Studio"
-								data-experience="5+ Years in monitoring audience retention analytics & SEO."
+								data-experience="<b>5+ years</b> studying audience retention analytics & SEO in Youtube Studio."
 							/>
 						</div>
 					</div>
 				</div>
-				<img
-					src="./MOG.jpg"
-					class="static md:absolute left-15 top-15 md:-translate-y-1/2 w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden mb-4 md:left-8 drop-shadow-s drop-shadow-black transition-transform duration-300"
-					alt="Profile Picture"
-				/>
+				<div
+					class="static md:absolute top-0 left-4 md:left-8 flex flex-row items-center mb-4 md:mb-0 z-10"
+				>
+					<img
+						src="./MOG.jpg"
+						class="profile-icon w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden drop-shadow-s drop-shadow-black transition-all duration-400 hover:scale-110 cursor-pointer"
+						alt="Profile Picture"
+						data-experience="My name is <b>Gavin Butler</b>. I have a <b>BA in Media Production</b> from the <b>University of Colorado Boulder</b>, and have been professionally editing video for over <b>5 years</b>. I love to ski, create, and be the <b>BEST</b> at whatever I do."
+					/>
+					<!-- Hover Description Box (Aligned to the right of MOG.jpg) -->
+					<div
+						class="hidden md:flex w-96 justify-start pl-8 text-left pointer-events-none"
+					>
+						<p
+							id="profile-experience-box"
+							class="text-gray-200 text-s font-small leading-snug opacity-0 transition-opacity duration-300"
+						>
+							<!-- Text populates on hover -->
+						</p>
+					</div>
+				</div>
 				<h1
 					class="text-5xl font-bold text-white drop-shadow-2xl text-center mb-0"
 				>
 					Gavin Butler
 				</h1>
 
-				<h2
-					class="text-xl font-bold text-red-600 drop-shadow-2xl text-center mb-4 py-1 border-b"
+				<!-- Subtitle + Right Experience Container -->
+				<div
+					class="relative flex items-center justify-center w-full mb-4"
 				>
-					Video Editor | Content Creator
-				</h2>
+					<h2
+						class="text-xl font-bold text-red-600 drop-shadow-2xl text-center py-1 border-b"
+					>
+						Video Editor | Content Creator
+					</h2>
+
+					<!-- Social Description Box -->
+					<div
+						class="hidden md:block absolute left-1/2 ml-[180px] w-64 text-left pointer-events-none"
+					>
+						<p
+							id="social-experience-box"
+							class="text-gray-200 text-lg font-medium leading-snug opacity-0 transition-opacity duration-300"
+						>
+							<!-- Text populates on hover -->
+						</p>
+					</div>
+				</div>
 
 				<!-- Centered Social Icons -->
-				<div class="flex items-center gap-7 justify-center py/1">
+				<div class="flex items-center gap-7 justify-center py-1">
 					<a
 						href="https://instagram.com/that1butleryt"
 						target="_blank"
-						class="inline-block"
+						class="social-icon inline-block"
+						data-experience="@That1ButlerYT is my branded account associated with content and Youtube!"
 					>
 						<img
 							class="w-13 h-13 object-cover rounded-lg hover:scale-125 transition-all duration-400"
@@ -205,7 +221,8 @@ import { YouTube } from "astro-embed";
 					<a
 						href="https://youtube.com/@that1butler"
 						target="_blank"
-						class="inline-block"
+						class="social-icon inline-block"
+						data-experience="@That1Butler on YT, 2M+ views, more information down below!"
 					>
 						<img
 							class="w-13 h-13 object-contain rounded-lg hover:scale-125 transition-all duration-400"
@@ -214,7 +231,11 @@ import { YouTube } from "astro-embed";
 						/>
 					</a>
 
-					<a href="mailto:gavin@butlerhq.com" target="_blank">
+					<a
+						href="mailto:gavin@butlerhq.com"
+						class="social-icon inline-block"
+						data-experience="Reach out to gavin@butlerhq.com for inquiries or commissions!"
+					>
 						<img
 							class="w-13 h-13 object-contain rounded-lg hover:scale-125 transition-all duration-400"
 							src="./gm.webp"
