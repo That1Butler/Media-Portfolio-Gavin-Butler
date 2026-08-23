@@ -14,38 +14,80 @@ import { YouTube } from "astro-embed";
 	</head>
 	<body class="bg-[url('./micro_carbon.webp')]">
 		<script>
-			const observerOptions = {
-				root: null,
-				rootMargin: "0px",
-				threshold: 0.1, // Triggers when 10% of the text enters the screen
-			};
+			const observer = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							// In view: slide in and fade in
+							entry.target.classList.remove(
+								"opacity-0",
+								"-translate-x-12",
+							);
+							entry.target.classList.add(
+								"opacity-100",
+								"translate-x-0",
+							);
+						} else {
+							// Out of view: reset back to original state (fades out and shifts back left)
+							entry.target.classList.remove(
+								"opacity-100",
+								"translate-x-0",
+							);
+							entry.target.classList.add(
+								"opacity-0",
+								"-translate-x-12",
+							);
+						}
+					});
+				},
+				{
+					threshold: 0.2, // Triggers when 20% of the element is visible
+				},
+			);
 
-			const observer = new IntersectionObserver((entries) => {
-				entries.forEach((entry) => {
-					if (entry.isIntersecting) {
-						// Strip out the hidden states to trigger the Tailwind transition
-						entry.target.classList.remove(
-							"opacity-0",
-							"-translate-x-12",
-						);
-						entry.target.classList.add(
-							"opacity-100",
-							"translate-x-0",
-						);
+			const target = document.getElementById("reveal-section");
+			if (target) observer.observe(target);
+		</script>
+		<script>
+			const observer = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							// Slide in & fade in on scroll down
+							entry.target.classList.remove(
+								"opacity-0",
+								"-translate-x-12",
+							);
+							entry.target.classList.add(
+								"opacity-100",
+								"translate-x-0",
+							);
+						} else {
+							// Reset (fade out & slide left) when scrolling away
+							entry.target.classList.remove(
+								"opacity-100",
+								"translate-x-0",
+							);
+							entry.target.classList.add(
+								"opacity-0",
+								"-translate-x-12",
+							);
+						}
+					});
+				},
+				{
+					threshold: 0.15,
+				},
+			);
 
-						// Stop watching this element once animated
-						observer.unobserve(entry.target);
-					}
-				});
-			}, observerOptions);
-
-			// Target your list container
-			const targets = document.querySelectorAll(".scroll-reveal-left");
-			targets.forEach((target) => observer.observe(target));
+			// Automatically watches all sections using the scroll-reveal-left class
+			document
+				.querySelectorAll(".scroll-reveal-left")
+				.forEach((el) => observer.observe(el));
 		</script>
 		<main class="container mx-auto px-4 py-10">
 			<div
-				class="relative flex flex-col items-center justify-center border-b pb-6 min-h-[160px]"
+				class="relative flex flex-col items-center justify-center border-b pb-6 min-h: 160px"
 			>
 				<img
 					src="./MOG.jpg"
@@ -122,49 +164,64 @@ import { YouTube } from "astro-embed";
 				class="shadow-xl border-3 border-[#000000] w-80 aspect-9/16 rounded-xl m-4 hover:scale-105 transition-all duration-400"
 			/>
 		</div>
-		<div
-			class="flex -col justify-center-safe scroll-reveal-left opacity-0 -translate-x-12 transition-all duration-1000 ease-out"
-		>
-			<h1
-				class="flex border-r justiy-center font-bold text-xl text-white drop-shadow-[#024950] drop-shadow-md p-5 m-4"
-			>
-				BORG Vodka Water | Content Creator
-			</h1>
+		<div class="w-full max-w-6xl mx-auto">
 			<div
-				class="text-lg text-white drop-shadow-[#024950] drop-shadow-md p-5 m-4 list-disc pl-5 marker:text-lg"
+				id="reveal-section"
+				class="scroll-reveal-left opacity-0 -translate-x-12 transition-all duration-1000 ease-out flex md:grid md:grid-cols-[max-content_1fr] text-white p-5 m-4"
 			>
-				<ul class="list-disc pl-5 marker:text-lg">
-					<li>
-						Led <span class="font-bold"
-							>end-to-end social media content production{" "}
-						</span>
-						including storyboarding, producing 30+ pieces of individual
-						content
-					</li>
-					<li class="mt-7">
-						Increased <span class="font-bold">brand reach{" "}</span
-						> and supported <span class="font-bold"
-							>nationwide sales{" "}</span
+				<div
+					class="w-max text-xl text-right border-r md:border-b-0 md:border-r border-white pr-6 pb-3 md:pb-0 h-full flex flex-col justify-start"
+				>
+					<h1
+						class="drop-shadow-[#024950] drop-shadow-md whitespace-nowrap"
+					>
+						<div
+							class="font-bold border-b border-white p-1 text-right whitespace-nowrap"
 						>
-						through trend-driven Instagram and TikTok videos
-					</li>
-					<li class="mt-7">
-						Developed <span class="font-bold"
-							>campaign and event concepts{" "}</span
-						> aligned with social media trends, and worked to appeal to
-						new audiences
-					</li>
-					<li class="mt-7">
-						Analyzed <span class="font-bold"
-							>content performance and social media trends{
-								" "
-							}</span
-						>
-						to optimize engagement and visibility
-					</li>
-				</ul>
+							Content Creator
+						</div>
+						<div class="text-sm py-2 text-right whitespace-nowrap">
+							BORG Vodka Water
+						</div>
+					</h1>
+				</div>
+				<div
+					class="text-lg text-white drop-shadow-[#024950] drop-shadow-md p-5 m-4 list-disc pl-5 marker:text-lg"
+				>
+					<ul class="list-disc pl-5 marker:text-lg">
+						<li>
+							Led <span class="font-bold"
+								>end-to-end social media content production{" "}
+							</span>
+							including storyboarding, producing 30+ pieces of individual
+							content
+						</li>
+						<li class="mt-7">
+							Increased organic reach, generating <span
+								class="font-bold">100k+ views{" "}</span
+							> across trend-driven <span class="font-bold"
+								>Instagram and TikTok videos {" "}</span
+							>
+						</li>
+						<li class="mt-7">
+							Developed <span class="font-bold"
+								>campaign and event concepts{" "}</span
+							> aligned with social media trends, and worked to appeal
+							to new audiences
+						</li>
+						<li class="mt-7">
+							Analyzed <span class="font-bold"
+								>social media analytics and performance{
+									" "
+								}</span
+							>
+							driving stronger audience retention and visibility.
+						</li>
+					</ul>
+				</div>
 			</div>
 		</div>
+
 		<div class="flex justify-center flex-1">
 			<YouTube
 				id={"https://youtu.be/eLIxVySvIwQ"}
@@ -189,6 +246,7 @@ import { YouTube } from "astro-embed";
 		</div>
 		<div class="w-full max-w-6xl mx-auto">
 			<div
+				id="reveal-section"
 				class="scroll-reveal-left opacity-0 -translate-x-12 transition-all duration-1000 ease-out flex md:grid md:grid-cols-[max-content_1fr] text-white p-5 m-4"
 			>
 				<div
@@ -212,34 +270,36 @@ import { YouTube } from "astro-embed";
 				>
 					<ul class="list-disc pl-5 marker:text-lg">
 						<li>
-							Created <span class="font-bold"
-								>personal and commercial ski edits for clients.{
-									" "
-								}
+							Produced high-tempo <span class="font-bold"
+								>personal and commercial ski edits for diverse
+								clients{" "}
 							</span>
 							This included a variety of camera types, and styles of
 							montages.
 						</li>
 						<li class="mt-7">
 							Coached <span class="font-bold"
-								>100s of clients{" "}</span
+								>100s of athletes{" "}</span
 							> and produced an <span class="font-bold"
 								>exemplary product{" "}</span
 							>
-							maintaining a 97% NPS score (customer reviews.)
+							maintaining a 97% NPS score (customer review score), delivering
+							custom video products.
 						</li>
 						<li class="mt-7">
-							Filmed for the purpose of <span class="font-bold"
-								>advertising private coaching,{" "}</span
-							> generating profit, recurring clients, and a customer
-							base left satisfied with their experiences.
+							Filmed promotional media to <span class="font-bold"
+								>promote private coaching programs,{" "}</span
+							> driving direct sales growth, recurring clients, and
+							strong customer retention.
 						</li>
 						<li class="mt-7">
-							Built <span class="font-bold"
-								>strong interpersonal relationships{" "}</span
+							Cultivated <span class="font-bold"
+								>strong client and brand relationships{
+									" "
+								}</span
 							>
-							alongside the content I am creating, filled with the love
-							and passion I have for the craft.
+							combining technical videography expertise with personalized
+							coaching to create lifelong memories.
 						</li>
 					</ul>
 				</div>
@@ -308,19 +368,41 @@ import { YouTube } from "astro-embed";
 							</div>
 						</h1>
 						<div
-							class="flex items-center justify-start md:justify-end gap-2 mt-3"
+							class="flex flex-col items-start md:items-end gap-1 mt-3"
 						>
-							<span
-								class="text-l font-semibold uppercase tracking-wider text-gray-300 drop-shadow-[#024950] drop-shadow-md"
+							<!-- Row 1: Subscribers -->
+							<div
+								class="flex items-center justify-start md:justify-end gap-2"
 							>
-								Subscribers:
-							</span>
-							<span
-								id="yt-sub-count"
-								class="text-lg font-bold text-red-500 drop-shadow-[#024950] drop-shadow-md"
+								<span
+									class="text-lg font-semibold uppercase tracking-wider text-gray-300 drop-shadow-[#024950] drop-shadow-md whitespace-nowrap"
+								>
+									Subscribers:
+								</span>
+								<span
+									id="yt-sub-count"
+									class="text-lg font-bold text-red-500 drop-shadow-[#024950] drop-shadow-md"
+								>
+									5,240
+								</span>
+							</div>
+
+							<!-- Row 2: Total Views -->
+							<div
+								class="flex items-center justify-start md:justify-end gap-2"
 							>
-								5,230
-							</span>
+								<span
+									class="text-lg font-semibold uppercase tracking-wider text-gray-300 drop-shadow-[#024950] drop-shadow-md whitespace-nowrap"
+								>
+									Total Views:
+								</span>
+								<span
+									id="yt-view-count"
+									class="text-lg font-bold text-red-500 drop-shadow-[#024950] drop-shadow-md"
+								>
+									2,450,000+
+								</span>
+							</div>
 						</div>
 					</div>
 
@@ -331,16 +413,17 @@ import { YouTube } from "astro-embed";
 						<ul class="list-disc pl-5 marker:text-lg">
 							<li>
 								Generated <span class="font-bold"
-									>3M+ views{" "}</span
-								> across multiple platforms including Youtube, Instagram,
-								and Tiktok.
+									>2.4M+ views{" "}</span
+								> across Youtube, Instagram, and Tiktok through strategic
+								visual storytelling and brand development.
 							</li>
 							<li class="mt-7">
-								Successfully generated <span class="font-bold"
-									>$1,000s of income</span
-								> casually off of <span class="font-bold"
-									>personal branding{" "}</span
-								> and my content creations ad revinue.
+								Successfully monitized personal brand content to
+								generate <span class="font-bold"
+									>thousands in revenue</span
+								> off of <span class="font-bold"
+									>platform ad share.</span
+								>
 							</li>
 							<li class="mt-7">
 								Managed all aspects of production workflows <span
