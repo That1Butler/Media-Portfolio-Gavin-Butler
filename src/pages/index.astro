@@ -13,12 +13,6 @@ import { YouTube } from "astro-embed";
 		<title>Media Portfolio | That1Butler</title>
 	</head>
 	<body class="bg-[url('./micro_carbon.webp')]">
-		The issue is that closest(".tool-icon") fails when hovering directly on
-		an <img /> tag that has the class .tool-icon itself. closest() looks for an
-		ancestor matching the selector, but if the element doesn't have parents with
-		that class, it returns null and breaks the event listener. Here is the fixed
-		script that safely pulls getAttribute("data-experience") directly from the
-		hovered target: HTML
 		<script>
 			document.addEventListener("DOMContentLoaded", () => {
 				// 1. Scroll Reveal Observer
