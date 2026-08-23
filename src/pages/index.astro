@@ -13,6 +13,36 @@ import { YouTube } from "astro-embed";
 		<title>Media Portfolio | That1Butler</title>
 	</head>
 	<body class="bg-[url('./micro_carbon.webp')]">
+		<script>
+			const observerOptions = {
+				root: null,
+				rootMargin: "0px",
+				threshold: 0.1, // Triggers when 10% of the text enters the screen
+			};
+
+			const observer = new IntersectionObserver((entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						// Strip out the hidden states to trigger the Tailwind transition
+						entry.target.classList.remove(
+							"opacity-0",
+							"-translate-x-12",
+						);
+						entry.target.classList.add(
+							"opacity-100",
+							"translate-x-0",
+						);
+
+						// Stop watching this element once animated
+						observer.unobserve(entry.target);
+					}
+				});
+			}, observerOptions);
+
+			// Target your list container
+			const targets = document.querySelectorAll(".scroll-reveal-left");
+			targets.forEach((target) => observer.observe(target));
+		</script>
 		<main class="container mx-auto px-4 py-10">
 			<div
 				class="relative flex flex-col items-center justify-center border-b pb-6 min-h-[160px]"
@@ -92,7 +122,9 @@ import { YouTube } from "astro-embed";
 				class="shadow-xl border-3 border-[#000000] w-80 aspect-9/16 rounded-xl m-4 hover:scale-105 transition-all duration-400"
 			/>
 		</div>
-		<div class="flex -col justify-center-safe">
+		<div
+			class="flex -col justify-center-safe scroll-reveal-left opacity-0 -translate-x-12 transition-all duration-1000 ease-out"
+		>
 			<h1
 				class="flex border-r justiy-center font-bold text-xl text-white drop-shadow-[#024950] drop-shadow-md p-5 m-4"
 			>
@@ -155,185 +187,219 @@ import { YouTube } from "astro-embed";
 				class="shadow-xl border-3 border-[#000000] w-80 aspect-9/16 rounded-xl m-4 hover:scale-105 transition-all duration-400"
 			/>
 		</div>
-		<div class="flex -col justify-center-safe">
-			<h1
-				class="flex border-r justiy-center font-bold text-xl text-white drop-shadow-[#024950] drop-shadow-md p-5 m-4"
-			>
-				Freestyle Ski Coach/Videographer | Mammoth Mountain
-			</h1>
+		<div class="w-full max-w-6xl mx-auto">
 			<div
-				class="text-lg text-white drop-shadow-[#024950] drop-shadow-md p-5 m-4 list-disc pl-5 marker:text-lg"
+				class="scroll-reveal-left opacity-0 -translate-x-12 transition-all duration-1000 ease-out flex md:grid md:grid-cols-[max-content_1fr] text-white p-5 m-4"
 			>
-				<ul class="list-disc pl-5 marker:text-lg">
-					<li>
-						Created <span class="font-bold"
-							>personal and commercial ski edits for clients.{" "}
-						</span>
-						This included a variety of camera types, and styles of montages.
-					</li>
-					<li class="mt-7">
-						Coached <span class="font-bold"
-							>100s of clients{" "}</span
-						> and produced an <span class="font-bold"
-							>exemplary product{" "}</span
-						>
-						maintaining a 97% NPS score (customer reviews.)
-					</li>
-					<li class="mt-7">
-						Filmed for the purpose of <span class="font-bold"
-							>advertising private coaching,{" "}</span
-						> generating profit, recurring clients, and a customer base
-						left satisfied with their experiences.
-					</li>
-					<li class="mt-7">
-						Built <span class="font-bold"
-							>strong interpersonal relationships{" "}</span
-						>
-						alongside the content I am creating, filled with the love
-						and passion I have for the craft.
-					</li>
-				</ul>
-			</div>
-		</div>
-		<div class="flex justify-center flex-1 flex-wrap items-center">
-			<!-- Instagram Reel Wrapper matching YouTube Component Sizing -->
-			<div
-				class="w-80 aspect-9/16 rounded-xl m-4 shadow-xl border-3 border-[#000000] hover:scale-105 transition-all duration-400 overflow-hidden flex items-center justify-center bg-black"
-			>
-				<blockquote
-					class="instagram-media"
-					data-instgrm-captioned
-					data-instgrm-permalink="https://www.instagram.com/reel/DcG2AsLiVAF/?utm_source=ig_embed&utm_campaign=loading"
-					data-instgrm-version="14"
-					style="background:black; border:0; margin:0; padding:0; width:100%; min-width:100%; height:100%; object-fit:cover;"
+				<div
+					class="w-max text-xl text-right border-r md:border-b-0 md:border-r border-white pr-6 pb-3 md:pb-0 h-full flex flex-col justify-start"
 				>
-				</blockquote>
+					<h1
+						class="drop-shadow-[#024950] drop-shadow-md whitespace-nowrap"
+					>
+						<div
+							class="font-bold border-b border-white p-1 text-right whitespace-nowrap"
+						>
+							Freestyle Ski Coach/Videographer
+						</div>
+						<div class="text-sm py-2 text-right whitespace-nowrap">
+							Mammoth Mountain, California
+						</div>
+					</h1>
+				</div>
+				<div
+					class="text-lg text-white drop-shadow-[#024950] drop-shadow-md p-5 m-4 list-disc pl-5 marker:text-lg"
+				>
+					<ul class="list-disc pl-5 marker:text-lg">
+						<li>
+							Created <span class="font-bold"
+								>personal and commercial ski edits for clients.{
+									" "
+								}
+							</span>
+							This included a variety of camera types, and styles of
+							montages.
+						</li>
+						<li class="mt-7">
+							Coached <span class="font-bold"
+								>100s of clients{" "}</span
+							> and produced an <span class="font-bold"
+								>exemplary product{" "}</span
+							>
+							maintaining a 97% NPS score (customer reviews.)
+						</li>
+						<li class="mt-7">
+							Filmed for the purpose of <span class="font-bold"
+								>advertising private coaching,{" "}</span
+							> generating profit, recurring clients, and a customer
+							base left satisfied with their experiences.
+						</li>
+						<li class="mt-7">
+							Built <span class="font-bold"
+								>strong interpersonal relationships{" "}</span
+							>
+							alongside the content I am creating, filled with the love
+							and passion I have for the craft.
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="flex justify-center flex-1">
+				<!-- 2. Instagram Reel Container (Updated to match YouTube element styles) -->
+				<div
+					class="w-80 m-4 shadow-xl border-3 border-[#000000] aspect-9/16 rounded-xl hover:scale-105 transition-all duration-400 overflow-hidden bg-black shrink-0"
+				>
+					<blockquote
+						class="instagram-media"
+						data-instgrm-captioned
+						data-instgrm-permalink="https://www.instagram.com/reel/DcG2AsLiVAF/?utm_source=ig_embed&utm_campaign=loading"
+						data-instgrm-version="14"
+						style="background:black; border:0; margin:0; padding:0; width:100%; min-width:100%; height:100%; object-fit:cover;"
+					>
+					</blockquote>
+				</div>
+
+				<!-- 3. YouTube Shorts -->
+				<YouTube
+					id={"https://youtube.com/shorts/GNC_43XQuPQ"}
+					posterQuality="max"
+					class="shadow-xl border-3 border-[#000000] w-80 aspect-9/16 rounded-xl m-4 hover:scale-105 transition-all duration-400 shrink-0"
+				/>
+				<YouTube
+					id={"https://youtube.com/shorts/UmOvhBu0ams?feature=share"}
+					posterQuality="max"
+					class="shadow-xl border-3 border-[#000000] w-80 aspect-9/16 rounded-xl m-4 hover:scale-105 transition-all duration-400 shrink-0"
+				/>
+				<YouTube
+					id={"https://youtube.com/shorts/AhjISt0zVic"}
+					posterQuality="max"
+					class="shadow-xl border-3 border-[#000000] w-80 aspect-9/16 rounded-xl m-4 hover:scale-105 transition-all duration-400 shrink-0"
+				/>
 			</div>
 
-			<!-- YouTube Shorts -->
-			<YouTube
-				id={"https://youtube.com/shorts/GNC_43XQuPQ"}
-				posterQuality="max"
-				class="shadow-xl border-3 border-[#000000] w-80 aspect-9/16 rounded-xl m-4 hover:scale-105 transition-all duration-400"
-			/>
-			<YouTube
-				id={"https://youtube.com/shorts/UmOvhBu0ams?feature=share"}
-				posterQuality="max"
-				class="shadow-xl border-3 border-[#000000] w-80 aspect-9/16 rounded-xl m-4 hover:scale-105 transition-all duration-400"
-			/>
-			<YouTube
-				id={"https://youtube.com/shorts/AhjISt0zVic"}
-				posterQuality="max"
-				class="shadow-xl border-3 border-[#000000] w-80 aspect-9/16 rounded-xl m-4 hover:scale-105 transition-all duration-400"
-			/>
-		</div>
-
-		<script>
-			function loadInstagram() {
-				if (window.instgrm) {
-					window.instgrm.Embeds.process();
-				} else {
-					const script = document.createElement("script");
-					script.async = true;
-					script.src = "//www.instagram.com/embed.js";
-					document.body.appendChild(script);
+			<script>
+				function loadInstagram() {
+					if (window.instgrm) {
+						window.instgrm.Embeds.process();
+					} else {
+						const script = document.createElement("script");
+						script.async = true;
+						script.src = "//www.instagram.com/embed.js";
+						document.body.appendChild(script);
+					}
 				}
-			}
 
-			loadInstagram();
-			document.addEventListener("astro:page-load", loadInstagram);
-		</script>
-		<div class="flex -col justify-center-safe">
-			<div class="flex flex-col justify-start border-r p-5 m-4">
-				<h1
-					class="font-bold text-xl text-white drop-shadow-[#024950] drop-shadow-md"
+				loadInstagram();
+				document.addEventListener("astro:page-load", loadInstagram);
+			</script>
+			<div class="w-full max-w-6xl mx-auto">
+				<div
+					class="scroll-reveal-left opacity-0 -translate-x-12 transition-all duration-1000 ease-out flex md:grid md:grid-cols-[320px_1fr] text-white p-5 my-4"
 				>
-					Personal Youtube Channel | Gaming/Ski/Music Content
-				</h1>
+					<!-- LEFT COLUMN: Title & Subscriber Box (Locked to 320px wide on desktop) -->
+					<div
+						class="w-full md:w-auto text-xl text-left md:text-right border-r md:border-b-0 md:border-r border-white pr-5 pb-3 md:pb-0 h-full flex flex-col justify-start"
+					>
+						<h1 class="drop-shadow-[#024950] drop-shadow-md">
+							<div class="font-bold border-b border-white p-1">
+								Personal Youtube Channel
+							</div><div class="text-sm py-2">
+								Gaming, Ski, Music Content
+							</div>
+						</h1>
+						<div
+							class="flex items-center justify-start md:justify-end gap-2 mt-3"
+						>
+							<span
+								class="text-l font-semibold uppercase tracking-wider text-gray-300 drop-shadow-[#024950] drop-shadow-md"
+							>
+								Subscribers:
+							</span>
+							<span
+								id="yt-sub-count"
+								class="text-lg font-bold text-red-500 drop-shadow-[#024950] drop-shadow-md"
+							>
+								5,230
+							</span>
+						</div>
+					</div>
 
-				<div class="flex items-center gap-2 mt-3">
-					<span
-						class="text-sm font-semibold uppercase tracking-wider text-gray-300 drop-shadow-[#024950] drop-shadow-md"
+					<!-- RIGHT COLUMN: Bullet Points -->
+					<div
+						class="w-full text-lg drop-shadow-[#024950] drop-shadow-md pl-5 md:pl-6"
 					>
-						Subscribers:
-					</span>
-					<span
-						id="yt-sub-count"
-						class="text-lg font-bold text-red-500 drop-shadow-[#024950] drop-shadow-md"
-					>
-						5200
-					</span>
+						<ul class="list-disc pl-5 marker:text-lg">
+							<li>
+								Generated <span class="font-bold"
+									>3M+ views{" "}</span
+								> across multiple platforms including Youtube, Instagram,
+								and Tiktok.
+							</li>
+							<li class="mt-7">
+								Successfully generated <span class="font-bold"
+									>$1,000s of income</span
+								> casually off of <span class="font-bold"
+									>personal branding{" "}</span
+								> and my content creations ad revinue.
+							</li>
+							<li class="mt-7">
+								Managed all aspects of production workflows <span
+									class="font-bold"
+									>including scripting, video editing, motion
+									graphics, audio mastering, color grading,
+									and thumbnail design.</span
+								>
+							</li>
+							<li class="mt-7">
+								Leveraged platform analytics (CTR, retention
+								graphs, account reach, engagement rates) <span
+									class="font-bold"
+									>to continuously refine video hooks, pacing,
+									and visual storytelling.</span
+								>
+							</li>
+						</ul>
+					</div>
 				</div>
 			</div>
 
-			<div
-				class="text-lg text-white drop-shadow-[#024950] drop-shadow-md p-5 m-4 list-disc pl-5 marker:text-lg"
-			>
-				<ul class="list-disc pl-5 marker:text-lg">
-					<li>
-						Generated <span class="font-bold">3M+ views{" "}</span> across
-						multiple platforms including Youtube, Instagram, and Tiktok.
-					</li>
-					<li class="mt-7">
-						Successfully generated <span class="font-bold"
-							>$1,000s of income</span
-						> casually off of <span class="font-bold"
-							>personal branding{" "}</span
-						> and my content creations ad revinue.
-					</li>
-					<li class="mt-7">
-						Managed all aspects of production workflows <span
-							class="font-bold"
-							>including scripting, video editing, motion
-							graphics, audio mastering, color grading, and
-							thumbnail design.</span
-						>
-					</li>
-					<li class="mt-7">
-						Leveraged platform analytics (CTR, retention graphs,
-						account reach, engagement rates)<span class="font-bold"
-							>(CTR, retention graphs, account reach, engagement
-							rates){" "}</span
-						> to continuously refine video hooks, pacing, and visual storytelling.
-					</li>
-				</ul>
-			</div>
-		</div>
+			<script>
+				const API_KEY = "AIzaSyC3ZYtM0Kj1Kt2U5B7ZmbYBtB2YeyRqc_s"; // Paste your API key here
+				const CHANNEL_HANDLE = "that1butler";
 
-		<script>
-			const API_KEY = "AIzaSyC3ZYtM0Kj1Kt2U5B7ZmbYBtB2YeyRqc_s"; // Paste your API key here
-			const CHANNEL_HANDLE = "that1butler";
+				async function fetchSubCount() {
+					const subCountElement =
+						document.getElementById("yt-sub-count");
+					if (!subCountElement) return;
 
-			async function fetchSubCount() {
-				const subCountElement = document.getElementById("yt-sub-count");
-				if (!subCountElement) return;
+					const fallbackValue = subCountElement.textContent.trim();
 
-				const fallbackValue = subCountElement.textContent.trim();
+					try {
+						const res = await fetch(
+							`https://www.googleapis.com/youtube/v3/channels?part=statistics&forHandle=${CHANNEL_HANDLE}&key=${API_KEY}`,
+						);
+						const data = await res.json();
 
-				try {
-					const res = await fetch(
-						`https://www.googleapis.com/youtube/v3/channels?part=statistics&forHandle=${CHANNEL_HANDLE}&key=${API_KEY}`,
-					);
-					const data = await res.json();
-
-					if (data.items && data.items.length > 0) {
-						const count = data.items[0].statistics.subscriberCount;
-						subCountElement.textContent =
-							Number(count).toLocaleString();
-					} else {
+						if (data.items && data.items.length > 0) {
+							const count =
+								data.items[0].statistics.subscriberCount;
+							subCountElement.textContent =
+								Number(count).toLocaleString();
+						} else {
+							subCountElement.textContent = fallbackValue;
+						}
+					} catch (error) {
+						console.error(
+							"Error fetching YouTube subscriber count:",
+							error,
+						);
 						subCountElement.textContent = fallbackValue;
 					}
-				} catch (error) {
-					console.error(
-						"Error fetching YouTube subscriber count:",
-						error,
-					);
-					subCountElement.textContent = fallbackValue;
 				}
-			}
 
-			fetchSubCount();
-			document.addEventListener("astro:page-load", fetchSubCount);
-		</script>
+				fetchSubCount();
+				document.addEventListener("astro:page-load", fetchSubCount);
+			</script>
+		</div>
 	</body>
 </html>
