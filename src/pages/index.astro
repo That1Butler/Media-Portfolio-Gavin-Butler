@@ -12,39 +12,73 @@ import { YouTube } from "astro-embed";
 		<meta name="generator" content={Astro.generator} />
 		<title>Media Portfolio | That1Butler</title>
 	</head>
-	<body class="bg-[#003135]">
-		<h1
-			class="font-bold text-5xl text-[#AFDDE5] drop-shadow-[#024950] drop-shadow-md p-5"
-		>
-			That1Butler
-		</h1>
-		<!-- Forcing the maximum resolution thumbnail -->
-		<div class="flex bg-[#0FA4AF]/50">
+	<body class="bg-[url('./micro_carbon.webp')]">
+		<main class="container mx-auto">
+			<h1
+				class="flex text-left font-bold text-5xl text-white drop-shadow-black drop-shadow-2xl py-2 px-2 justify-center"
+			>
+				That1Butler
+			</h1>
+			<h1
+				class="flex flex-wrap text-left font-bold text-xl text-red-600 drop-shadow-black drop-shadow-2xl px-3 justify-center"
+			>
+				Video Editor | Content Creator
+			</h1>
+			<div class="flex flex-wrap gap-5 justify-center py-4 border-b">
+				<a
+					href="https://instagram.com/that1butleryt"
+					class="inline-block"
+					target="_blank"
+				>
+					<img
+						class="w-7 h-7 object-cover rounded-lg hover:scale-125 transition-all duration-400"
+						src="./IG.svg"
+					/>
+				</a>
+				<a
+					target="_blank"
+					href="https://youtube.com/@that1butler"
+					class="inline-block"
+				>
+					<img
+						class="w-8 h-8 object-contain rounded-lg hover:scale-125 transition-all duration-400"
+						src="./YT.svg"
+					/>
+				</a>
+
+				<a target="_blank" href="mailto:gavin@butlerhq.com">
+					<img
+						class="w-8 h-8 object-contain rounded-lg hover:scale-125 transition-all duration-400"
+						src="./gm.webp"
+					/>
+				</a>
+			</div>
 			<div class="flex flex-1">
 				<YouTube
 					id={"https://youtube.com/shorts/HF-i6XxfTWk"}
 					posterQuality="max"
-					class="shadow-xl border-3 border-[#024950] w-80 aspect-9/16 rounded-xl m-4"
+					class="shadow-xl border-3 border-[#000000] w-80 aspect-9/16 rounded-xl m-4"
 				/>
 				<YouTube
 					id={"https://youtube.com/shorts/64LtaCqv4Po"}
 					posterQuality="max"
-					class="shadow-xl border-3 border-[#024950] w-80 aspect-9/16 rounded-xl m-4"
+					class="shadow-xl border-3 border-[#000000] w-80 aspect-9/16 rounded-xl m-4"
 				/>
 				<YouTube
 					id={"https://youtube.com/shorts/UlS6Za1OyeA"}
 					posterQuality="max"
-					class="shadow-xl border-3 border-[#024950] w-80 aspect-9/16 rounded-xl m-4"
+					class="shadow-xl border-3 border-[#000000] w-80 aspect-9/16 rounded-xl m-4"
 				/>
 			</div>
+			<!-- Forcing the maximum resolution thumbnail -->
 			<div class="flex flex-col justify-center-safe">
 				<h1
-					class="bg-red-950 font-bold text-xl text-white drop-shadow-[#024950] drop-shadow-md p-5 m-4 rounded-2xl"
+					class="border-b font-bold text-xl text-white drop-shadow-[#024950] drop-shadow-md p-5 m-4"
 				>
 					BORG Vodka Water | Remote Content Creator
 				</h1>
-				<h1
-					class="bg-red-950 text-lg text-white drop-shadow-[#024950] drop-shadow-md p-5 m-4 rounded-2xl list-disc pl-5 marker:text-lg"
+				<div
+					class="border-b text-lg text-white drop-shadow-[#024950] drop-shadow-md p-5 m-4 list-disc pl-5 marker:text-lg"
 				>
 					<ul class="list-disc pl-5 marker:text-lg">
 						<li>
@@ -77,8 +111,8 @@ import { YouTube } from "astro-embed";
 							to optimize engagement and visibility
 						</li>
 					</ul>
-				</h1>
+				</div>
 			</div>
-		</div>
+		</main>
 	</body>
 </html>
