@@ -1,0 +1,36 @@
+---
+import "../styles/global.css";
+import { YouTube } from "astro-embed";
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Media Portfolio | That1Butler</title>
+	</head>
+	<body class="bg-[#003135]">
+		<h1 class = "font-bold text-5xl text-[#AFDDE5] drop-shadow-[#024950] drop-shadow-md p-5">That1Butler</h1>
+			<!-- Forcing the maximum resolution thumbnail -->
+			 <div class = "flex bg-[#0FA4AF]/50">
+			<YouTube
+				id={"https://youtube.com/shorts/HF-i6XxfTWk"}
+				posterQuality="max"
+				class = "shadow-xl border-3 border-[#024950] w-50 aspect-9/16 rounded-xl m-4"/>
+			<YouTube
+				id={"https://youtube.com/shorts/64LtaCqv4Po"}
+				posterQuality="max"
+				class = "shadow-xl border-3 border-[#024950] w-50 aspect-9/16 rounded-xl m-4"/>
+			<YouTube
+				id={"https://youtube.com/shorts/UlS6Za1OyeA"}
+				posterQuality="max"
+				class = "shadow-xl border-3 border-[#024950] w-50 aspect-9/16 rounded-xl m-4"/>
+			<div class="w-64 h-32 bg-blue-500">
+			
+			</div>
+			</div>
+	</body>
+</html>
