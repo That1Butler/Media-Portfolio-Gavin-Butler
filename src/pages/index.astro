@@ -124,8 +124,7 @@ import { YouTube } from "astro-embed";
 							subCountEl.textContent = subs.toLocaleString();
 						}
 						if (viewCountEl) {
-							viewCountEl.textContent =
-								views.toLocaleString() + "+";
+							viewCountEl.textContent = views.toLocaleString();
 						}
 						if (combinedEl) {
 							const totalCombined = views + INSTAGRAM_FIXED_VIEWS;
