@@ -16,7 +16,7 @@ import { YouTube } from "astro-embed";
 			// List of Variables
 			const YT_API_KEY = "AIzaSyC3ZYtM0Kj1Kt2U5B7ZmbYBtB2YeyRqc_s";
 			const CHANNEL_HANDLE = "that1butler";
-			const INSTAGRAM_FIXED_VIEWS = 1100000;
+			const INSTAGRAM_FIXED_VIEWS = 1200000;
 			const INSTAGRAM_ACCESS_TOKEN = "YOUR_INSTAGRAM_ACCESS_TOKEN_HERE";
 			const INSTAGRAM_MEDIA_ID = "YOUR_REEL_OR_MEDIA_ID_HERE";
 
@@ -359,7 +359,7 @@ import { YouTube } from "astro-embed";
 						href="https://youtube.com/@that1butler"
 						target="_blank"
 						class="social-icon inline-block"
-						data-experience="<b>@That1Butler</b> on YouTube, generating <b>2M+ views</b>, more information down below!"
+						data-experience="<b>@That1Butler</b> on YouTube, generating <b>MILLIONS of views</b> per month, more information down below!"
 					>
 						<img
 							class="w-13 h-13 object-contain rounded-lg hover:scale-125 transition-all duration-400"
@@ -382,6 +382,172 @@ import { YouTube } from "astro-embed";
 				</div>
 			</div>
 		</main>
+		<div class="flex justify-center flex-1">
+			<!-- 2. Instagram Reel Container (Updated to match YouTube element styles) -->
+			<div
+				class="w-80 m-4 shadow-xl border-3 border-[#000000] aspect-9/16 rounded-xl hover:scale-105 transition-all duration-400 overflow-hidden bg-black shrink-0"
+			>
+				<blockquote
+					class="instagram-media"
+					data-instgrm-captioned
+					data-instgrm-permalink="https://www.instagram.com/reel/DcG2AsLiVAF/?utm_source=ig_embed&utm_campaign=loading"
+					data-instgrm-version="14"
+					style="background:black; border:0; margin:0; padding:0; width:100%; min-width:100%; height:100%; object-fit:cover;"
+				>
+				</blockquote>
+			</div>
+
+			<!-- 3. YouTube Shorts -->
+			<YouTube
+				id={"https://youtube.com/shorts/GNC_43XQuPQ"}
+				posterQuality="max"
+				class="shadow-xl border-3 border-[#000000] w-80 aspect-9/16 rounded-xl m-4 hover:scale-105 transition-all duration-400 shrink-0"
+			/>
+			<YouTube
+				id={"https://youtube.com/shorts/UmOvhBu0ams?feature=share"}
+				posterQuality="max"
+				class="shadow-xl border-3 border-[#000000] w-80 aspect-9/16 rounded-xl m-4 hover:scale-105 transition-all duration-400 shrink-0"
+			/>
+			<YouTube
+				id={"https://youtube.com/shorts/AhjISt0zVic"}
+				posterQuality="max"
+				class="shadow-xl border-3 border-[#000000] w-80 aspect-9/16 rounded-xl m-4 hover:scale-105 transition-all duration-400 shrink-0"
+			/>
+		</div>
+
+		<script>
+			function loadInstagram() {
+				if (window.instgrm) {
+					window.instgrm.Embeds.process();
+				} else {
+					const script = document.createElement("script");
+					script.async = true;
+					script.src = "//www.instagram.com/embed.js";
+					document.body.appendChild(script);
+				}
+			}
+
+			loadInstagram();
+			document.addEventListener("astro:page-load", loadInstagram);
+		</script>
+		<div class="w-full max-w-6xl mx-auto">
+			<div
+				class="scroll-reveal-left opacity-0 -translate-x-12 transition-all duration-1000 ease-out flex md:grid md:grid-cols-[320px_1fr] text-white p-5 my-4"
+			>
+				<!-- LEFT COLUMN: Title & Subscriber Box (Locked to 320px wide on desktop) -->
+				<div
+					class="w-full md:w-auto text-xl text-left md:text-right border-r md:border-b-0 md:border-r border-white pr-5 pb-3 md:pb-0 h-full flex flex-col justify-start"
+				>
+					<h1 class="drop-shadow-black drop-shadow-md">
+						<div class="font-bold border-b border-white p-1">
+							Personal YouTube Channel
+						</div><div class="text-sm py-2">
+							Gaming, Skiing, Music Content
+						</div>
+					</h1>
+					<div
+						class="flex flex-col items-start md:items-end gap-1 mt-3"
+					>
+						<!-- Row 1: Subscribers -->
+						<div
+							class="flex items-center justify-start md:justify-end gap-2"
+						>
+							<span
+								class="text-lg font-semibold tracking-wider text-gray-300 drop-shadow-black drop-shadow-md whitespace-nowrap"
+							>
+								Subscribers:
+							</span>
+							<span
+								id="yt-sub-count"
+								class="text-lg font-bold text-red-600 drop-shadow-black drop-shadow-md"
+							>
+								5,240
+							</span>
+						</div>
+
+						<!-- Row 2: Total Views -->
+						<div
+							class="flex items-center justify-start md:justify-end gap-2"
+						>
+							<span
+								class="text-lg font-semibold tracking-wider text-gray-300 drop-shadow-black drop-shadow-md whitespace-nowrap"
+							>
+								Total YouTube Views:
+							</span>
+							<span
+								id="yt-view-count"
+								class="text-lg font-bold text-red-600 drop-shadow-black drop-shadow-md"
+							>
+								3,550,000+
+							</span>
+						</div>
+						<div
+							class="flex items-center justify-start md:justify-end gap-2"
+						>
+							<span
+								class="text-lg font-semibold tracking-wider text-gray-300 drop-shadow-black drop-shadow-md whitespace-nowrap"
+							>
+								Total Instagram Views:
+							</span>
+							<span
+								id="ig-view-count"
+								class="text-lg font-bold text-pink-600 drop-shadow-black drop-shadow-md"
+							>
+								1.2M
+							</span>
+						</div>
+					</div>
+				</div>
+
+				<!-- RIGHT COLUMN: Bullet Points -->
+				<div
+					class="w-full text-lg drop-shadow-black drop-shadow-md pl-5 md:pl-6"
+				>
+					<!-- Move </ul> so it wraps ALL <li> items -->
+					<ul class="list-disc pl-5 marker:text-lg space-y-7">
+						<li>
+							Generated{" "}
+							<span
+								id="combined-views"
+								class="text-lg font-bold text-red-600 drop-shadow-black drop-shadow-md"
+							>
+								3M+
+							</span>
+							{" "}views across YouTube, Instagram, and TikTok
+							through strategic visual storytelling and brand
+							development.
+						</li>
+
+						<li>
+							Successfully monetized personal brand content to
+							generate <span class="font-bold"
+								>thousands in revenue</span
+							> from <span class="font-bold"
+								>platform ad share.</span
+							>
+						</li>
+
+						<li>
+							Managed all aspects of production workflows <span
+								class="font-bold"
+								>including scripting, video editing, motion
+								graphics, audio mastering, color grading, and
+								thumbnail design.</span
+							>
+						</li>
+
+						<li>
+							Leveraged platform analytics (CTR, retention graphs,
+							account reach, engagement rates) <span
+								class="font-bold"
+								>to continuously refine video hooks, pacing, and
+								visual storytelling.</span
+							>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
 		<div class="flex justify-center flex-1">
 			<YouTube
 				id={"https://youtube.com/shorts/HF-i6XxfTWk"}
@@ -542,172 +708,6 @@ import { YouTube } from "astro-embed";
 							coaching to create lifelong memories.
 						</li>
 					</ul>
-				</div>
-			</div>
-			<div class="flex justify-center flex-1">
-				<!-- 2. Instagram Reel Container (Updated to match YouTube element styles) -->
-				<div
-					class="w-80 m-4 shadow-xl border-3 border-[#000000] aspect-9/16 rounded-xl hover:scale-105 transition-all duration-400 overflow-hidden bg-black shrink-0"
-				>
-					<blockquote
-						class="instagram-media"
-						data-instgrm-captioned
-						data-instgrm-permalink="https://www.instagram.com/reel/DcG2AsLiVAF/?utm_source=ig_embed&utm_campaign=loading"
-						data-instgrm-version="14"
-						style="background:black; border:0; margin:0; padding:0; width:100%; min-width:100%; height:100%; object-fit:cover;"
-					>
-					</blockquote>
-				</div>
-
-				<!-- 3. YouTube Shorts -->
-				<YouTube
-					id={"https://youtube.com/shorts/GNC_43XQuPQ"}
-					posterQuality="max"
-					class="shadow-xl border-3 border-[#000000] w-80 aspect-9/16 rounded-xl m-4 hover:scale-105 transition-all duration-400 shrink-0"
-				/>
-				<YouTube
-					id={"https://youtube.com/shorts/UmOvhBu0ams?feature=share"}
-					posterQuality="max"
-					class="shadow-xl border-3 border-[#000000] w-80 aspect-9/16 rounded-xl m-4 hover:scale-105 transition-all duration-400 shrink-0"
-				/>
-				<YouTube
-					id={"https://youtube.com/shorts/AhjISt0zVic"}
-					posterQuality="max"
-					class="shadow-xl border-3 border-[#000000] w-80 aspect-9/16 rounded-xl m-4 hover:scale-105 transition-all duration-400 shrink-0"
-				/>
-			</div>
-
-			<script>
-				function loadInstagram() {
-					if (window.instgrm) {
-						window.instgrm.Embeds.process();
-					} else {
-						const script = document.createElement("script");
-						script.async = true;
-						script.src = "//www.instagram.com/embed.js";
-						document.body.appendChild(script);
-					}
-				}
-
-				loadInstagram();
-				document.addEventListener("astro:page-load", loadInstagram);
-			</script>
-			<div class="w-full max-w-6xl mx-auto">
-				<div
-					class="scroll-reveal-left opacity-0 -translate-x-12 transition-all duration-1000 ease-out flex md:grid md:grid-cols-[320px_1fr] text-white p-5 my-4"
-				>
-					<!-- LEFT COLUMN: Title & Subscriber Box (Locked to 320px wide on desktop) -->
-					<div
-						class="w-full md:w-auto text-xl text-left md:text-right border-r md:border-b-0 md:border-r border-white pr-5 pb-3 md:pb-0 h-full flex flex-col justify-start"
-					>
-						<h1 class="drop-shadow-black drop-shadow-md">
-							<div class="font-bold border-b border-white p-1">
-								Personal YouTube Channel
-							</div><div class="text-sm py-2">
-								Gaming, Skiing, Music Content
-							</div>
-						</h1>
-						<div
-							class="flex flex-col items-start md:items-end gap-1 mt-3"
-						>
-							<!-- Row 1: Subscribers -->
-							<div
-								class="flex items-center justify-start md:justify-end gap-2"
-							>
-								<span
-									class="text-lg font-semibold tracking-wider text-gray-300 drop-shadow-black drop-shadow-md whitespace-nowrap"
-								>
-									Subscribers:
-								</span>
-								<span
-									id="yt-sub-count"
-									class="text-lg font-bold text-red-600 drop-shadow-black drop-shadow-md"
-								>
-									5,240
-								</span>
-							</div>
-
-							<!-- Row 2: Total Views -->
-							<div
-								class="flex items-center justify-start md:justify-end gap-2"
-							>
-								<span
-									class="text-lg font-semibold tracking-wider text-gray-300 drop-shadow-black drop-shadow-md whitespace-nowrap"
-								>
-									Total YouTube Views:
-								</span>
-								<span
-									id="yt-view-count"
-									class="text-lg font-bold text-red-600 drop-shadow-black drop-shadow-md"
-								>
-									3,550,000+
-								</span>
-							</div>
-							<div
-								class="flex items-center justify-start md:justify-end gap-2"
-							>
-								<span
-									class="text-lg font-semibold tracking-wider text-gray-300 drop-shadow-black drop-shadow-md whitespace-nowrap"
-								>
-									Total Instagram Views:
-								</span>
-								<span
-									id="ig-view-count"
-									class="text-lg font-bold text-pink-600 drop-shadow-black drop-shadow-md"
-								>
-									1.1M
-								</span>
-							</div>
-						</div>
-					</div>
-
-					<!-- RIGHT COLUMN: Bullet Points -->
-					<div
-						class="w-full text-lg drop-shadow-black drop-shadow-md pl-5 md:pl-6"
-					>
-						<!-- Move </ul> so it wraps ALL <li> items -->
-						<ul class="list-disc pl-5 marker:text-lg space-y-7">
-							<li>
-								Generated{" "}
-								<span
-									id="combined-views"
-									class="text-lg font-bold text-red-600 drop-shadow-black drop-shadow-md"
-								>
-									3M+
-								</span>
-								{" "}views across YouTube, Instagram, and TikTok
-								through strategic visual storytelling and brand
-								development.
-							</li>
-
-							<li>
-								Successfully monetized personal brand content to
-								generate <span class="font-bold"
-									>thousands in revenue</span
-								> from <span class="font-bold"
-									>platform ad share.</span
-								>
-							</li>
-
-							<li>
-								Managed all aspects of production workflows <span
-									class="font-bold"
-									>including scripting, video editing, motion
-									graphics, audio mastering, color grading,
-									and thumbnail design.</span
-								>
-							</li>
-
-							<li>
-								Leveraged platform analytics (CTR, retention
-								graphs, account reach, engagement rates) <span
-									class="font-bold"
-									>to continuously refine video hooks, pacing,
-									and visual storytelling.</span
-								>
-							</li>
-						</ul>
-					</div>
 				</div>
 			</div>
 		</div>
