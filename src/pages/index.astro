@@ -13,14 +13,19 @@ import { YouTube } from "astro-embed";
 
 	<body>
 		<script>
-			// List of Variables
-			const YT_API_KEY = "AIzaSyC3ZYtM0Kj1Kt2U5B7ZmbYBtB2YeyRqc_s";
-			const CHANNEL_HANDLE = "that1butler";
-			const INSTAGRAM_FIXED_VIEWS = 1500000;
-			const INSTAGRAM_ACCESS_TOKEN = "YOUR_INSTAGRAM_ACCESS_TOKEN_HERE";
-			const INSTAGRAM_MEDIA_ID = "YOUR_REEL_OR_MEDIA_ID_HERE";
+			// Configuration Constants
+			// IMPORTANT: Avoid hardcoding sensitive API keys directly in client-side code in production.
+			const CONFIG = {
+				YT_API_KEY: "AIzaSyC3ZYtM0Kj1Kt2U5B7ZmbYBtB2YeyRqc_s",
+				CHANNEL_HANDLE: "that1butler",
+				INSTAGRAM_FIXED_VIEWS: 1500000,
+				INSTAGRAM_ACCESS_TOKEN: "YOUR_INSTAGRAM_ACCESS_TOKEN_HERE",
+				INSTAGRAM_MEDIA_ID: "YOUR_REEL_OR_MEDIA_ID_HERE",
+			};
 
-			// 1. UI & Scroll Animations Setup
+			/**
+			 * 1. UI & Scroll Animations Setup
+			 */
 			function initUIInteractions() {
 				// Scroll Reveal Observer
 				const scrollObserver = new IntersectionObserver(
@@ -54,7 +59,7 @@ import { YouTube } from "astro-embed";
 						scrollObserver.observe(el);
 					});
 
-				// Hover Handlers
+				// Hover Handlers helper
 				const bindHover = (selector, targetBoxId) => {
 					const elements = document.querySelectorAll(selector);
 					const targetBox = document.getElementById(targetBoxId);
@@ -72,7 +77,7 @@ import { YouTube } from "astro-embed";
 								targetBox.classList.add("opacity-100");
 							}
 
-							// Permanently hide the profile hover badge
+							// Permanently hide the profile hover badge if hovering over profile-icon
 							if (selector === ".profile-icon") {
 								const badge = document.getElementById(
 									"profile-hover-badge",
@@ -101,7 +106,9 @@ import { YouTube } from "astro-embed";
 				bindHover(".profile-icon", "profile-experience-box");
 			}
 
-			// 2. YouTube Data Fetching (Fetches once, populates subs, views, & combined totals)
+			/**
+			 * 2. YouTube Data Fetching
+			 */
 			async function fetchYouTubeData() {
 				const subCountEl = document.getElementById("yt-sub-count");
 				const viewCountEl = document.getElementById("yt-view-count");
@@ -110,26 +117,27 @@ import { YouTube } from "astro-embed";
 				if (!subCountEl && !viewCountEl && !combinedEl) return;
 
 				try {
-					const res = await fetch(
-						`https://www.googleapis.com/youtube/v3/channels?part=statistics&forHandle=${CHANNEL_HANDLE}&key=${YT_API_KEY}`,
-					);
+					const url = `https://www.googleapis.com/youtube/v3/channels?part=statistics&forHandle=${CONFIG.CHANNEL_HANDLE}&key=${CONFIG.YT_API_KEY}`;
+					const res = await fetch(url);
+
+					if (!res.ok)
+						throw new Error(`HTTP error! Status: ${res.status}`);
+
 					const data = await res.json();
 
-					if (data.items && data.items.length > 0) {
+					if (data.items?.length > 0) {
 						const stats = data.items[0].statistics;
 						const subs = Number(stats.subscriberCount) || 0;
 						const views = Number(stats.viewCount) || 0;
 
-						if (subCountEl) {
+						if (subCountEl)
 							subCountEl.textContent = subs.toLocaleString();
-						}
-						if (viewCountEl) {
+						if (viewCountEl)
 							viewCountEl.textContent = views.toLocaleString();
-						}
 						if (combinedEl) {
-							const totalCombined = views + INSTAGRAM_FIXED_VIEWS;
-							combinedEl.textContent =
-								(totalCombined / 1000000).toFixed(1) + "M+";
+							const totalCombined =
+								views + CONFIG.INSTAGRAM_FIXED_VIEWS;
+							combinedEl.textContent = `${(totalCombined / 1000000).toFixed(1)}M+`;
 						}
 					}
 				} catch (error) {
@@ -137,40 +145,49 @@ import { YouTube } from "astro-embed";
 				}
 			}
 
-			// 3. Instagram View Fetching (Not Working Yet :/   )
+			/**
+			 * 3. Instagram View Fetching
+			 */
 			async function fetchInstagramViews() {
 				const viewElement = document.getElementById("ig-view-count");
 				if (!viewElement) return;
 
 				try {
-					const response = await fetch(
-						`https://graph.instagram.com/v19.0/${INSTAGRAM_MEDIA_ID}?fields=views,play_count&access_token=${INSTAGRAM_ACCESS_TOKEN}`,
-					);
+					const url = `https://graph.instagram.com/v19.0/${CONFIG.INSTAGRAM_MEDIA_ID}?fields=views,play_count&access_token=${CONFIG.INSTAGRAM_ACCESS_TOKEN}`;
+					const response = await fetch(url);
+
+					if (!response.ok)
+						throw new Error(
+							`HTTP error! Status: ${response.status}`,
+						);
+
 					const data = await response.json();
-					const views = data.views || data.play_count;
+					const views = data.views ?? data.play_count;
 
 					if (views !== undefined) {
-						viewElement.textContent =
-							Number(views).toLocaleString() + "+";
+						viewElement.textContent = `${Number(views).toLocaleString()}+`;
 					}
 				} catch (error) {
 					console.error("Error fetching Instagram views:", error);
 				}
 			}
 
-			// Initialize all logic
+			/**
+			 * Main Initialization Routine
+			 */
 			function runAllScripts() {
 				initUIInteractions();
 				fetchYouTubeData();
 				fetchInstagramViews();
 			}
 
-			// Execution Hooks (Works on raw DOM load & Astro view transitions)
+			// Execution Hooks (Works on standard page load & Astro view transitions)
 			if (document.readyState === "loading") {
 				document.addEventListener("DOMContentLoaded", runAllScripts);
 			} else {
 				runAllScripts();
 			}
+
 			document.addEventListener("astro:page-load", runAllScripts);
 		</script>
 		<main class="container mx-auto px-4 py-10">
@@ -272,8 +289,8 @@ import { YouTube } from "astro-embed";
 					<div class="relative flex-shrink-0">
 						<!-- Profile Picture -->
 						<img
-							src="./MOG.jpg"
 							class="profile-icon w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden drop-shadow-s drop-shadow-black transition-all duration-400 hover:scale-110 cursor-pointer"
+							src="./MOG.jpg"
 							alt="Profile Picture"
 							data-experience="My name is <b>Gavin Butler</b>. I have a <b>BA in Media Production</b> from the <b>University of Colorado Boulder</b>, and have been professionally editing video for over <b>5 years</b>. I love to ski, create, and be the <b>BEST</b> at whatever I do."
 						/>
@@ -340,6 +357,7 @@ import { YouTube } from "astro-embed";
 					</div>
 				</div>
 
+				<!-- Centered Social Icons -->
 				<!-- Centered Social Icons -->
 				<div class="flex items-center gap-7 justify-center py-1">
 					<a
@@ -478,8 +496,118 @@ import { YouTube } from "astro-embed";
 								id="yt-view-count"
 								class="text-lg font-bold text-red-600 drop-shadow-black drop-shadow-md"
 							>
-								3,450,000+
+								0+
 							</span>
+
+							<script>
+								document.addEventListener(
+									"DOMContentLoaded",
+									() => {
+										const el =
+											document.getElementById(
+												"yt-view-count",
+											);
+										if (!el) return;
+
+										const animate = (target) => {
+											const duration = 3000;
+											let startTime = null;
+
+											const step = (currentTime) => {
+												if (!startTime)
+													startTime = currentTime;
+												const progress = Math.min(
+													(currentTime - startTime) /
+														duration,
+													1,
+												);
+												const easedProgress =
+													1 -
+													Math.pow(1 - progress, 3);
+												const currentVal = Math.floor(
+													easedProgress * target,
+												);
+
+												el.textContent =
+													currentVal.toLocaleString() +
+													"+";
+
+												if (progress < 1) {
+													requestAnimationFrame(step);
+												} else {
+													el.textContent =
+														target.toLocaleString() +
+														"+";
+												}
+											};
+
+											requestAnimationFrame(step);
+										};
+
+										// Watch for when your live fetch script updates the text inside #yt-view-count
+										const mutationObserver =
+											new MutationObserver(
+												(mutations, obs) => {
+													const rawText =
+														el.textContent.replace(
+															/[^0-9]/g,
+															"",
+														);
+													const liveNumber = parseInt(
+														rawText,
+														10,
+													);
+
+													if (
+														!isNaN(liveNumber) &&
+														liveNumber > 0
+													) {
+														obs.disconnect(); // Stop watching once live number is detected
+
+														// Trigger count-up animation once the element is visible
+														const scrollObserver =
+															new IntersectionObserver(
+																(
+																	entries,
+																	sObs,
+																) => {
+																	entries.forEach(
+																		(
+																			entry,
+																		) => {
+																			if (
+																				entry.isIntersecting
+																			) {
+																				animate(
+																					liveNumber,
+																				);
+																				sObs.unobserve(
+																					entry.target,
+																				);
+																			}
+																		},
+																	);
+																},
+																{
+																	threshold: 0.2,
+																},
+															);
+
+														scrollObserver.observe(
+															el,
+														);
+													}
+												},
+											);
+
+										mutationObserver.observe(el, {
+											childList: true,
+											characterData: true,
+											subtree: true,
+										});
+									},
+								);
+							</script>
 						</div>
 						<div
 							class="flex items-center justify-start md:justify-end gap-2"
@@ -528,11 +656,11 @@ import { YouTube } from "astro-embed";
 						</li>
 
 						<li>
-							Managed all aspects of production workflows <span
-								class="font-bold"
-								>including scripting, video editing, motion
-								graphics, audio mastering, color grading, and
-								thumbnail design.</span
+							Managed all aspects of production workflows
+							including <span class="font-bold"
+								>scripting, video editing, motion graphics,
+								audio mastering, color grading, and thumbnail
+								design.</span
 							>
 						</li>
 
@@ -570,6 +698,7 @@ import { YouTube } from "astro-embed";
 				class="shadow-xl border-3 border-[#000000] w-80 aspect-9/16 rounded-xl m-4 hover:scale-105 transition-all duration-400"
 			/>
 		</div>
+
 		<div class="w-full max-w-6xl mx-auto">
 			<div
 				id="reveal-section"
@@ -591,28 +720,33 @@ import { YouTube } from "astro-embed";
 						</div>
 					</h1>
 				</div>
+
 				<div
 					class="text-lg text-white drop-shadow-black drop-shadow-md p-5 m-4 list-disc pl-5 marker:text-lg"
 				>
 					<ul class="list-disc pl-5 marker:text-lg">
 						<li>
 							Led <span class="font-bold"
-								>end-to-end social media content production{" "}
-							</span>
+								>End-to-End Social Media Content Production{
+									" "
+								}</span
+							>
 							including storyboarding, producing 30+ pieces of individual
 							content.
 						</li>
 						<li class="mt-7">
 							Increased organic reach, generating <span
 								class="font-bold">100k+ views{" "}</span
-							> across trend-driven <span class="font-bold"
-								>Instagram and TikTok videos. {" "}</span
+							>
+							across trend-driven <span class="font-bold"
+								>Instagram and TikTok videos.{" "}</span
 							>
 						</li>
 						<li class="mt-7">
 							Developed <span class="font-bold"
 								>campaign and event concepts{" "}</span
-							> aligned with social media trends, and worked to appeal
+							>
+							aligned with social media trends, and worked to appeal
 							to new audiences.
 						</li>
 						<li class="mt-7">
@@ -630,26 +764,27 @@ import { YouTube } from "astro-embed";
 
 		<div class="flex justify-center flex-1">
 			<YouTube
-				id={"https://youtu.be/FzQq4k9zGT0"}
+				id="https://youtu.be/FzQq4k9zGT0"
 				posterQuality="max"
 				class="shadow-xl border-3 border-[#000000] w-80 aspect-video rounded-xl m-4 hover:scale-105 transition-all duration-400"
 			/>
 			<YouTube
-				id={"https://youtube.com/shorts/cX70wzekeuE?feature=share"}
+				id="https://youtube.com/shorts/cX70wzekeuE?feature=share"
 				posterQuality="max"
 				class="shadow-xl border-3 border-[#000000] w-80 aspect-9/16 rounded-xl m-4 hover:scale-105 transition-all duration-400"
 			/>
 			<YouTube
-				id={"https://youtube.com/shorts/YNoBL4E6kNI?feature=share"}
+				id="https://youtube.com/shorts/YNoBL4E6kNI?feature=share"
 				posterQuality="max"
 				class="shadow-xl border-3 border-[#000000] w-80 aspect-9/16 rounded-xl m-4 hover:scale-105 transition-all duration-400"
 			/>
 			<YouTube
-				id={"https://youtube.com/shorts/10iEKixaEXs?feature=share"}
+				id="https://youtube.com/shorts/10iEKixaEXs?feature=share"
 				posterQuality="max"
 				class="shadow-xl border-3 border-[#000000] w-80 aspect-9/16 rounded-xl m-4 hover:scale-105 transition-all duration-400"
 			/>
 		</div>
+
 		<div class="w-full max-w-6xl mx-auto">
 			<div
 				id="reveal-section"
@@ -671,8 +806,9 @@ import { YouTube } from "astro-embed";
 						</div>
 					</h1>
 				</div>
+
 				<div
-					class="text-lg text-white drop-shadow-black drop-shadow-md p-5 m-4 list-disc pl-5 marker:text-lg"
+					class="text-lg text-white drop-shadow-black drop-shadow-md p-5 m-4"
 				>
 					<ul class="list-disc pl-5 marker:text-lg">
 						<li>
@@ -685,25 +821,27 @@ import { YouTube } from "astro-embed";
 						</li>
 						<li class="mt-7">
 							Coached <span class="font-bold"
-								>100s of athletes{" "}</span
-							> and produced an <span class="font-bold"
-								>exemplary product{" "}</span
-							>
+								>100s of athletes {" "}
+							</span>
+							and produced an <span class="font-bold"
+								>exemplary product{" "}
+							</span>
 							maintaining a 97% NPS score (customer review score), delivering
 							custom video products.
 						</li>
 						<li class="mt-7">
 							Filmed promotional media to <span class="font-bold"
-								>promote private coaching programs,{" "}</span
-							> driving direct sales growth, recurring clients, and
-							strong customer retention.
+								>promote private coaching programs,
+							</span>
+							{" "}driving direct sales growth, recurring clients,
+							and strong customer retention.
 						</li>
 						<li class="mt-7">
 							Cultivated <span class="font-bold"
-								>strong client and brand relationships{
+								>{" "}strong client and brand relationships, {
 									" "
-								}</span
-							>
+								}
+							</span>
 							combining technical videography expertise with personalized
 							coaching to create lifelong memories.
 						</li>
@@ -711,7 +849,6 @@ import { YouTube } from "astro-embed";
 				</div>
 			</div>
 		</div>
-
 		<div
 			class="scroll-reveal-left flex flex-col items-center justify-center mt-20 mb-16 text-center transition-all duration-700"
 		>
@@ -752,7 +889,7 @@ import { YouTube } from "astro-embed";
 						stroke-linecap="round"
 						stroke-linejoin="round"
 						stroke-width="2"
-						d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 002-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+						d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
 					></path>
 				</svg>
 				<span>Send Me an Email</span>
